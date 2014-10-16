@@ -8,6 +8,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,7 +21,8 @@ import android.widget.TextView;
 import com.marjolainevericel.senarai.R;
 
 public class HomeActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        PlaylistsFragment.OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -51,21 +53,28 @@ public class HomeActivity extends Activity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        Log.d("APP", "POSITION : " + String.valueOf(position));
+        if(position == 0) {
+            Log.d("APP", "/ HOME");
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, HomeFragment.newInstance())
+                    .commit();
+        }
+        else if(position == 1) {
+            Log.d("APP", "/ Playlists list");
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, PlaylistsFragment.newInstance())
+                    .commit();
+        }
     }
 
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(R.string.title_section1);
+                mTitle = getString(R.string.menu_home);
                 break;
             case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
+                mTitle = getString(R.string.menu_myplaylists);
                 break;
         }
     }
@@ -103,6 +112,11 @@ public class HomeActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onFragmentInteraction(String id) {
+        Log.d("APP", "L'ID est : " + id);
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -132,6 +146,7 @@ public class HomeActivity extends Activity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
             return rootView;
         }
 
