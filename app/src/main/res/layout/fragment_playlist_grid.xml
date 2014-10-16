@@ -5,12 +5,6 @@
     android:layout_height="match_parent"
     tools:context="com.marjolainevericel.senarai.playlist.PlaylistsFragment">
 
-    <TextView
-        android:id="@+id/testlist"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center" />
-
     <GridView
         android:id="@android:id/list"
         android:layout_width="match_parent"

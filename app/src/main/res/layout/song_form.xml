@@ -4,22 +4,26 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Playlist card"
-        android:id="@+id/playlist_card_title"
-        android:layout_gravity="center_horizontal" />
+        android:id="@+id/song_form_title" />
 
-    <TextView
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Playlist card"
-        android:id="@+id/playlist_card_description"
-        android:layout_gravity="left" />
+        android:id="@+id/song_form_artist" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/song_form_tempo" />
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Supprimer"/>
+        android:text="Chercher"
+        android:id="@+id/song_form_launch" />
 </LinearLayout>

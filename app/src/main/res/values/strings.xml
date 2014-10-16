@@ -10,5 +10,6 @@
     <string name="menu_myplaylists">Mes playlists</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_home">Accueil</string>
+    <string name="search_card_title">Recherche</string>
 
 </resources>

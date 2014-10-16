@@ -7,19 +7,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Playlist card"
-        android:id="@+id/playlist_card_title"
+        android:text="Artist card"
+        android:id="@+id/artist_card_name"
         android:layout_gravity="center_horizontal" />
 
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Playlist card"
-        android:id="@+id/playlist_card_description"
+        android:id="@+id/artist_card_image"
         android:layout_gravity="left" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Supprimer"/>
 </LinearLayout>
