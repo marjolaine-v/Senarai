@@ -57,7 +57,7 @@ public class PlaylistsFragment extends Fragment implements AbsListView.OnItemCli
 
         // TODO: Change Adapter to display your content
         mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+                R.layout.playlist_card,R.id.pl_card_title, DummyContent.ITEMS);
     }
 
     @Override
