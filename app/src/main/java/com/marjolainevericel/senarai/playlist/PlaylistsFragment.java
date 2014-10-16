@@ -3,11 +3,13 @@ package com.marjolainevericel.senarai.playlist;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.echonest.api.v4.Playlist;
@@ -22,8 +24,9 @@ public class PlaylistsFragment extends Fragment implements AbsListView.OnItemCli
 
     private int mResults;
     private String mArtist;
+    private Button mAddButton;
 
-    private OnPlaylistClickedListener mListener;
+    private OnPlaylistsListListener mListener;
     private AbsListView mListView;
     private PlaylistsAdapter mAdapter;
 
@@ -69,14 +72,24 @@ public class PlaylistsFragment extends Fragment implements AbsListView.OnItemCli
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
 
+        mAddButton = ((Button) view.findViewById(R.id.button_playlist_add));
+        final PlaylistsFragment that = this;
+        mAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onButtonAddPlaylistClicked();
+            }
+        });
+
         return view;
     }
+
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnPlaylistClickedListener) activity;
+            mListener = (OnPlaylistsListListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                 + " must implement OnFragmentInteractionListener");
@@ -117,15 +130,6 @@ public class PlaylistsFragment extends Fragment implements AbsListView.OnItemCli
         mAdapter.clear();
     }
 
-
-    /***************************************************
-     * LISTENERS
-     ***************************************************/
-    public interface OnPlaylistClickedListener {
-        void onPlaylistClicked(Playlist playlist);
-    }
-
-
     /***************************************************
      * CLICKS
      ***************************************************/
@@ -134,5 +138,14 @@ public class PlaylistsFragment extends Fragment implements AbsListView.OnItemCli
         if (null != mListener) {
             mListener.onPlaylistClicked(mAdapter.getItem(position));
         }
+    }
+
+
+    /***************************************************
+     * LISTENERS
+     ***************************************************/
+    public interface OnPlaylistsListListener {
+        void onPlaylistClicked(Playlist playlist);
+        void onButtonAddPlaylistClicked();
     }
 }

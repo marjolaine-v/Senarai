@@ -2,6 +2,7 @@ package main;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -13,11 +14,15 @@ import com.echonest.api.v4.Playlist;
 import com.marjolainevericel.senarai.R;
 import com.marjolainevericel.senarai.playlist.PlaylistsFragment;
 
+import java.util.HashMap;
+
 public class HomeActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, PlaylistsFragment.OnPlaylistClickedListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, PlaylistsFragment.OnPlaylistsListListener {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
+    private FragmentManager fragmentManager;
+    HashMap<Integer, String> fragmentMap;
 
 
     /***************************************************
@@ -43,7 +48,7 @@ public class HomeActivity extends FragmentActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         Log.d("APP", "POSITION : " + String.valueOf(position));
         if(position == 0) {
             Log.d("APP", "/ HOME");
@@ -92,5 +97,13 @@ public class HomeActivity extends FragmentActivity
     @Override
     public void onPlaylistClicked(Playlist playlist) {
         Log.d("APP", playlist.toString());
+    }
+
+    @Override
+    public void onButtonAddPlaylistClicked() {
+        Log.d("APP", ">>>>> On ajoute une playlist !");
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, HomeFragment.newInstance())
+                .commit();
     }
 }
