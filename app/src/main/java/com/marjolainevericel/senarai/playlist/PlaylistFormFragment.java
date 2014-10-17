@@ -3,12 +3,15 @@ package com.marjolainevericel.senarai.playlist;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,7 +29,7 @@ public class PlaylistFormFragment extends Fragment {
     private EditText mEditTitle;
     private EditText mEditDescription;
     OnPlaylistFormListener mListener;
-    Fragment self;
+    Context context;
 
 
     /***************************************************
@@ -52,16 +55,16 @@ public class PlaylistFormFragment extends Fragment {
         mEditDescription = ((EditText) view.findViewById(R.id.playlist_form_description));
 
         mAddButton = ((Button) view.findViewById(R.id.playlist_form_launch));
+        context = getActivity().getApplicationContext();
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEditTitle.clearFocus();
-                Log.d("APP", ">> mTitle >>>>>>>>>>>>>>>>>> " + mEditTitle.getText());
+                hideKeyboard(view);
                 if(!mEditTitle.getText().toString().matches("")) {
                     mListener.onButtonAddPlaylistClicked(mEditTitle.getText().toString(), mEditDescription.getText().toString());
                 }
                 else {
-                    Log.d("APP", ">> >> >> Merci d'ajouter un titre.");
+                    Toast.makeText(context, "Merci d'ajouter un titre à votre playlist", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -78,6 +81,13 @@ public class PlaylistFormFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    private void hideKeyboard(View view) {
+        view.clearFocus();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        InputMethodManager inputManager = (InputMethodManager) getActivity().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 
