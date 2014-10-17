@@ -9,23 +9,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
-import com.echonest.api.v4.Playlist;
 import com.marjolainevericel.senarai.R;
-import com.marjolainevericel.senarai.playlist.PlaylistFormFragment;
-import com.marjolainevericel.senarai.playlist.PlaylistFragment;
-import com.marjolainevericel.senarai.playlist.PlaylistsListFragment;
 
-import java.util.HashMap;
+import artist.ArtistCardFragment;
+import playlists.PlaylistAddFormFragment;
+import playlists.PlaylistCardFragment;
+import playlists.PlaylistListFragment;
+import songs.SongCardFragment;
+import songs.SongListFragment;
 
 public class HomeActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        PlaylistsListFragment.OnPlaylistsListListener,
-        PlaylistFormFragment.OnPlaylistFormListener {
+        PlaylistListFragment.OnPlaylistListListener,
+        PlaylistAddFormFragment.OnPlaylistAddFormListener,
+        SongListFragment.OnSongListListener
+        /*PlaylistsListFragment.OnPlaylistsListListener,
+        PlaylistFormFragment.OnPlaylistFormListener*/ {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private FragmentManager fragmentManager;
-    HashMap<Integer, String> fragmentMap;
 
 
     /***************************************************
@@ -40,7 +43,6 @@ public class HomeActivity extends FragmentActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
-        // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
@@ -50,16 +52,16 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
         fragmentManager = getSupportFragmentManager();
         if(position == 0) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, HomeFragment.newInstance())
+                    .addToBackStack(null)
                     .commit();
         }
         else if(position == 1) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, PlaylistsListFragment.newInstance())
+                    .replace(R.id.container, PlaylistListFragment.newInstance())
                     .addToBackStack(null)
                     .commit();
         }
@@ -96,25 +98,68 @@ public class HomeActivity extends FragmentActivity
      * PLAYLISTS LIST
      ***************************************************/
     @Override
+    public void onGoToAddPlaylistButtonClicked() {
+        Log.d("APP", ">>>> Goto Add Playlist Form");
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, PlaylistAddFormFragment.newInstance())
+                .addToBackStack(null)
+                .commit();
+    }
+
+
+    /***************************************************
+     * PLAYLIST ADD FORM
+     ***************************************************/
+    @Override
+    public void onAddPlaylistButtonClicked(String title, String description) {
+        Log.d("APP", ">>>> Add a playlist " + title);
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, PlaylistCardFragment.newInstance(title, description))
+                .replace(R.id.container_bottom, SongListFragment.newInstance(title, description))
+                .addToBackStack(null)
+                .commit();
+    }
+
+
+    /***************************************************
+     * SONG LIST
+     ***************************************************/
+    @Override
+    public void onSongListClicked(String id) {
+        Log.d("APP", "Chanson cliquée : " + id);
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, SongCardFragment.newInstance(id))
+                .replace(R.id.container_bottom, ArtistCardFragment.newInstance("Linkin Park"))
+                .addToBackStack(null)
+                .commit();
+    }
+    /*@Override
     public void onPlaylistClicked(Playlist playlist) {
         Log.d("APP", playlist.toString());
     }
 
     @Override
-    public void onButtonGoToFormAddPlaylistClicked() {
-        Log.d("APP", ">>>>> On ajoute une playlist !");
+    public void goToFormAddPlaylistButtonClicked() {
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaylistFormFragment.newInstance())
                 .addToBackStack(null)
                 .commit();
-    }
+    }*/
 
-    @Override
-    public void onButtonAddPlaylistClicked(String title, String description) {
-        Log.d("APP", ">>>>> La playlist est ajoutée !");
+
+    /***************************************************
+     * ADD PLAYLIST
+     ***************************************************/
+    /*@Override
+    public void addPlaylistButtonClicked(String title, String description) {
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaylistFragment.newInstance(title, description))
                 .addToBackStack(null)
                 .commit();
-    }
+    }*/
+
+
+    /***************************************************
+     * PLAYLIST
+     ***************************************************/
 }

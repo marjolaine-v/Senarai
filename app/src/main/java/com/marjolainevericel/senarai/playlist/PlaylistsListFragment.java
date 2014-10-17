@@ -70,17 +70,17 @@ public class PlaylistsListFragment extends Fragment implements AbsListView.OnIte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_playlists_list, container, false);
+        view = inflater.inflate(R.layout.fragment_playlist_list, container, false);
 
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
 
-        mAddButton = ((Button) view.findViewById(R.id.button_playlist_add));
+        mAddButton = ((Button) view.findViewById(R.id.playlist_list_add_playlist_button));
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onButtonGoToFormAddPlaylistClicked();
+                mListener.goToFormAddPlaylistButtonClicked();
             }
         });
 
@@ -148,6 +148,6 @@ public class PlaylistsListFragment extends Fragment implements AbsListView.OnIte
      ***************************************************/
     public interface OnPlaylistsListListener {
         void onPlaylistClicked(Playlist playlist);
-        void onButtonGoToFormAddPlaylistClicked();
+        void goToFormAddPlaylistButtonClicked();
     }
 }
