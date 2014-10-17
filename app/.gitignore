@@ -1,2 +1,6 @@
+.gradle
+/local.properties
+/.idea
+.DS_Store
 /build
 /src/main/res/values/secret.xml

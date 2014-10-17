@@ -2,6 +2,7 @@ package main;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -15,6 +16,7 @@ import artist.ArtistCardFragment;
 import playlists.PlaylistAddFormFragment;
 import playlists.PlaylistCardFragment;
 import playlists.PlaylistListFragment;
+import songs.SongAddFormFragment;
 import songs.SongCardFragment;
 import songs.SongListFragment;
 
@@ -22,9 +24,8 @@ public class HomeActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
         PlaylistListFragment.OnPlaylistListListener,
         PlaylistAddFormFragment.OnPlaylistAddFormListener,
-        SongListFragment.OnSongListListener
-        /*PlaylistsListFragment.OnPlaylistsListListener,
-        PlaylistFormFragment.OnPlaylistFormListener*/ {
+        SongListFragment.OnSongListListener,
+        SongAddFormFragment.OnSongAddFormListener {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -54,16 +55,10 @@ public class HomeActivity extends FragmentActivity
     public void onNavigationDrawerItemSelected(int position) {
         fragmentManager = getSupportFragmentManager();
         if(position == 0) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, HomeFragment.newInstance())
-                    .addToBackStack(null)
-                    .commit();
+            changeFragment(R.id.container, HomeFragment.newInstance(), false);
         }
         else if(position == 1) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, PlaylistListFragment.newInstance())
-                    .addToBackStack(null)
-                    .commit();
+            changeFragment(R.id.container, PlaylistListFragment.newInstance(), false);
         }
     }
 
@@ -95,15 +90,27 @@ public class HomeActivity extends FragmentActivity
 
 
     /***************************************************
+     * FRAGMENT MANAGER
+     ***************************************************/
+    public void changeFragment(Integer container, Fragment fragment, Boolean isBottomContainer) {
+        fragmentManager.beginTransaction()
+                .replace(container, fragment)
+                .addToBackStack(null)
+                .commit();
+        if(!isBottomContainer && fragmentManager.findFragmentById(R.id.container_bottom) != null) {
+            fragmentManager.beginTransaction()
+                    .remove(fragmentManager.findFragmentById(R.id.container_bottom))
+                    .commit();
+        }
+    }
+
+
+    /***************************************************
      * PLAYLISTS LIST
      ***************************************************/
     @Override
     public void onGoToAddPlaylistButtonClicked() {
-        Log.d("APP", ">>>> Goto Add Playlist Form");
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaylistAddFormFragment.newInstance())
-                .addToBackStack(null)
-                .commit();
+        changeFragment(R.id.container, PlaylistAddFormFragment.newInstance(), false);
     }
 
 
@@ -112,12 +119,8 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onAddPlaylistButtonClicked(String title, String description) {
-        Log.d("APP", ">>>> Add a playlist " + title);
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaylistCardFragment.newInstance(title, description))
-                .replace(R.id.container_bottom, SongListFragment.newInstance(title, description))
-                .addToBackStack(null)
-                .commit();
+        changeFragment(R.id.container, PlaylistCardFragment.newInstance(title, description), false);
+        changeFragment(R.id.container_bottom, SongListFragment.newInstance(title, description), true);
     }
 
 
@@ -126,40 +129,20 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onSongListClicked(String id) {
-        Log.d("APP", "Chanson cliquée : " + id);
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, SongCardFragment.newInstance(id))
-                .replace(R.id.container_bottom, ArtistCardFragment.newInstance("Linkin Park"))
-                .addToBackStack(null)
-                .commit();
+        changeFragment(R.id.container, SongCardFragment.newInstance(id), false);
+        changeFragment(R.id.container_bottom, ArtistCardFragment.newInstance("Linkin Park"), true);
     }
-    /*@Override
-    public void onPlaylistClicked(Playlist playlist) {
-        Log.d("APP", playlist.toString());
-    }
-
     @Override
-    public void goToFormAddPlaylistButtonClicked() {
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaylistFormFragment.newInstance())
-                .addToBackStack(null)
-                .commit();
-    }*/
+    public void onAddSongButtonClicked() {
+        changeFragment(R.id.container, SongAddFormFragment.newInstance(), false);
+    }
 
 
     /***************************************************
-     * ADD PLAYLIST
+     * SONG ADD FORM
      ***************************************************/
-    /*@Override
-    public void addPlaylistButtonClicked(String title, String description) {
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaylistFragment.newInstance(title, description))
-                .addToBackStack(null)
-                .commit();
-    }*/
-
-
-    /***************************************************
-     * PLAYLIST
-     ***************************************************/
+    @Override
+    public void onAddSongButtonClicked(String title, String artist) {
+        Log.d("APP", "On va matcher Echo Nest pour chercher une musique " + title + " d'un artiste " + artist);
+    }
 }

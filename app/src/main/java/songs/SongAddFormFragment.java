@@ -1,4 +1,4 @@
-package playlists;
+package songs;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,21 +15,21 @@ import android.widget.Toast;
 
 import com.marjolainevericel.senarai.R;
 
-public class PlaylistAddFormFragment extends Fragment {
+public class SongAddFormFragment extends Fragment {
 
-    private OnPlaylistAddFormListener mListener;
-    private Button mAddButton;
     private EditText mEditTitle;
-    private EditText mEditDescription;
+    private EditText mEditArtist;
+    private static Button mSearchButton;
+    private static OnSongAddFormListener mListener;
     Context context;
 
 
     /***************************************************
      * INIT
      ***************************************************/
-    public PlaylistAddFormFragment() { }
-    public static PlaylistAddFormFragment newInstance() {
-        PlaylistAddFormFragment fragment = new PlaylistAddFormFragment();
+    public SongAddFormFragment() { }
+    public static SongAddFormFragment newInstance() {
+        SongAddFormFragment fragment = new SongAddFormFragment();
         return fragment;
     }
 
@@ -39,23 +39,27 @@ public class PlaylistAddFormFragment extends Fragment {
      ***************************************************/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_playlist_add_form, container, false);
+        View view = inflater.inflate(R.layout.fragment_song_add_form, container, false);
 
         context = getActivity().getApplicationContext();
 
-        mEditTitle = ((EditText) view.findViewById(R.id.playlist_form_title));
-        mEditDescription = ((EditText) view.findViewById(R.id.playlist_form_description));
+        mEditTitle = ((EditText) view.findViewById(R.id.song_add_form_title));
+        mEditArtist = ((EditText) view.findViewById(R.id.song_add_form_artist_name));
 
-        mAddButton = (Button) view.findViewById(R.id.playlist_add_form_button);
-        mAddButton.setOnClickListener(new View.OnClickListener() {
+        mSearchButton = ((Button) view.findViewById(R.id.song_add_button));
+        mSearchButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 hideKeyboard(view);
-                if(!mEditTitle.getText().toString().matches("")) {
-                    mListener.onAddPlaylistButtonClicked(mEditTitle.getText().toString(), mEditDescription.getText().toString());
+                String title = mEditTitle.getText().toString();
+                String artist = mEditArtist.getText().toString();
+
+                if(!title.matches("") || !artist.matches("")) {
+                    mListener.onAddSongButtonClicked(title, artist);
                 }
                 else {
-                    Toast.makeText(context, "Merci d'ajouter un titre à votre playlist", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Merci de remplir au moins un champ", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -67,7 +71,7 @@ public class PlaylistAddFormFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnPlaylistAddFormListener) activity;
+            mListener = (OnSongAddFormListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
         }
@@ -94,7 +98,7 @@ public class PlaylistAddFormFragment extends Fragment {
     /***************************************************
      * INTERFACE
      ***************************************************/
-    public interface OnPlaylistAddFormListener {
-        void onAddPlaylistButtonClicked(String title, String description);
+    public interface OnSongAddFormListener {
+        public void onAddSongButtonClicked(String title, String artist);
     }
 }

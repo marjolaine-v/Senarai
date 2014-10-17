@@ -11,7 +11,7 @@ import server.EchoNestWrapper;
 
 /**
  * Created by Marjolaine on 16/10/2014.
- */
+ *
 public class PlaylistsListLoader extends android.support.v4.content.AsyncTaskLoader<Playlist> {
     private int mResults;
     private String mArtist;
@@ -49,3 +49,4 @@ public class PlaylistsListLoader extends android.support.v4.content.AsyncTaskLoa
         this.mResults = results;
     }
 }
+*/

@@ -30,8 +30,7 @@ public class PlaylistListFragment extends Fragment {
      ***************************************************/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view;
-        view = inflater.inflate(R.layout.fragment_playlist_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_playlist_list, container, false);
 
         mAddButton = (Button) view.findViewById(R.id.playlist_list_add_playlist_button);
         mAddButton.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +62,7 @@ public class PlaylistListFragment extends Fragment {
 
 
     /***************************************************
-     * LISTENERS
+     * INTERFACE
      ***************************************************/
     public interface OnPlaylistListListener {
         void onGoToAddPlaylistButtonClicked();

@@ -20,7 +20,7 @@ import com.marjolainevericel.senarai.R;
 import java.util.HashMap;
 
 
-public class PlaylistsListFragment extends Fragment implements AbsListView.OnItemClickListener, android.support.v4.app.LoaderManager.LoaderCallbacks<Playlist> {
+/*public class PlaylistsListFragment extends Fragment implements AbsListView.OnItemClickListener, android.support.v4.app.LoaderManager.LoaderCallbacks<Playlist> {
 
     private static final String ARG_RESULTS = "results";
     private static final String ARG_ARTIST = "artist";
@@ -37,7 +37,7 @@ public class PlaylistsListFragment extends Fragment implements AbsListView.OnIte
 
     /***************************************************
      * INITIALISATION
-     ***************************************************/
+     ***************************************************
     public PlaylistsListFragment() {
     }
 
@@ -66,7 +66,7 @@ public class PlaylistsListFragment extends Fragment implements AbsListView.OnIte
 
     /***************************************************
      * VIEW
-     ***************************************************/
+     ***************************************************
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view;
@@ -107,7 +107,7 @@ public class PlaylistsListFragment extends Fragment implements AbsListView.OnIte
 
     /***************************************************
      * LOADER
-     ***************************************************/
+     ***************************************************
     @Override
     public android.support.v4.content.Loader<Playlist> onCreateLoader(int i, Bundle bundle) {
         PlaylistsListLoader loader = new PlaylistsListLoader(getActivity());
@@ -134,7 +134,7 @@ public class PlaylistsListFragment extends Fragment implements AbsListView.OnIte
 
     /***************************************************
      * CLICKS
-     ***************************************************/
+     ***************************************************
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (null != mListener) {
@@ -145,9 +145,10 @@ public class PlaylistsListFragment extends Fragment implements AbsListView.OnIte
 
     /***************************************************
      * LISTENERS
-     ***************************************************/
+     ***************************************************
     public interface OnPlaylistsListListener {
         void onPlaylistClicked(Playlist playlist);
         void goToFormAddPlaylistButtonClicked();
     }
 }
+*/

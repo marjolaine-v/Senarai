@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.marjolainevericel.senarai.R;
 
-public class PlaylistFragment extends Fragment {
+/*public class PlaylistFragment extends Fragment {
 
     private static String mTitle;
     private static String mDescription;
@@ -38,3 +38,4 @@ public class PlaylistFragment extends Fragment {
 
 
 }
+*/

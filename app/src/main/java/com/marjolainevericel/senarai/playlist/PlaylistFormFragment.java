@@ -22,7 +22,7 @@ import com.marjolainevericel.senarai.R;
 /**
  * A simple {@link Fragment} subclass.
  *
- */
+ *
 public class PlaylistFormFragment extends Fragment {
 
     private Button mAddButton;
@@ -34,7 +34,7 @@ public class PlaylistFormFragment extends Fragment {
 
     /***************************************************
      * INITIALISATION
-     ***************************************************/
+     ***************************************************
     public PlaylistFormFragment() {
     }
     public static PlaylistFormFragment newInstance() {
@@ -45,7 +45,7 @@ public class PlaylistFormFragment extends Fragment {
 
     /***************************************************
      * VIEW
-     ***************************************************/
+     ***************************************************
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view;
@@ -93,8 +93,9 @@ public class PlaylistFormFragment extends Fragment {
 
     /***************************************************
      * LISTENERS
-     ***************************************************/
+     ***************************************************
     public interface OnPlaylistFormListener {
         void addPlaylistButtonClicked(String title, String description);
     }
 }
+*/

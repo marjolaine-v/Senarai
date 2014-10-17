@@ -36,8 +36,7 @@ public class PlaylistCardFragment extends Fragment {
      ***************************************************/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view;
-        view = inflater.inflate(R.layout.card_playlist, container, false);
+        View view = inflater.inflate(R.layout.card_playlist, container, false);
 
         ((TextView) view.findViewById(R.id.playlist_card_title)).setText(mTitle);
         ((TextView) view.findViewById(R.id.playlist_card_description)).setText(mDescription);

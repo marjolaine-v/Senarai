@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 /**
  * Created by Marjolaine on 16/10/2014.
- */
+ *
 public class PlaylistsListAdapter extends ArrayAdapter<Playlist> {
 
     private final LayoutInflater mInflater;
@@ -69,5 +69,5 @@ public class PlaylistsListAdapter extends ArrayAdapter<Playlist> {
     @Override
     public int getCount() {
         return 3;
-    }*/
-}
+    }*
+}*/
