@@ -3,6 +3,8 @@ package com.marjolainevericel.senarai.playlist;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +23,13 @@ import java.util.HashMap;
 /**
  * Created by Marjolaine on 16/10/2014.
  */
-public class PlaylistsAdapter extends ArrayAdapter<Playlist> {
+public class PlaylistsListAdapter extends ArrayAdapter<Playlist> {
 
     private final LayoutInflater mInflater;
     HashMap<Integer, String> fragmentMap;
 
-    public PlaylistsAdapter(Context context) {
-        super(context, android.R.layout.simple_list_item_2);
+    public PlaylistsListAdapter(Context context) {
+        super(context, R.layout.playlist_card);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -48,4 +50,24 @@ public class PlaylistsAdapter extends ArrayAdapter<Playlist> {
 
         return view;
     }
+/*public class PlaylistsAdapter extends FragmentPagerAdapter {
+    HashMap<Integer, String> fragmentMap;
+
+    public PlaylistsAdapter(FragmentManager fm) {
+        super(fm);
+        fragmentMap = new HashMap<Integer, String>();
+        fragmentMap.put(0, "Alec Empire");
+        fragmentMap.put(1, "U2");
+        fragmentMap.put(2, "Linkin Park");
+    }
+
+    @Override
+    public Fragment getItem(int i) {
+        return PlaylistsFragment.newInstance(10, fragmentMap.get(i));
+    }
+
+    @Override
+    public int getCount() {
+        return 3;
+    }*/
 }

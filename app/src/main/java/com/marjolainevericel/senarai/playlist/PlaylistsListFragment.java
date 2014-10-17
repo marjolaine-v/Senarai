@@ -3,6 +3,8 @@ package com.marjolainevericel.senarai.playlist;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +17,10 @@ import android.widget.Toast;
 import com.echonest.api.v4.Playlist;
 import com.marjolainevericel.senarai.R;
 
+import java.util.HashMap;
 
-public class PlaylistsFragment extends Fragment implements AbsListView.OnItemClickListener, android.support.v4.app.LoaderManager.LoaderCallbacks<Playlist> {
+
+public class PlaylistsListFragment extends Fragment implements AbsListView.OnItemClickListener, android.support.v4.app.LoaderManager.LoaderCallbacks<Playlist> {
 
     private static final String ARG_RESULTS = "results";
     private static final String ARG_ARTIST = "artist";
@@ -28,20 +32,20 @@ public class PlaylistsFragment extends Fragment implements AbsListView.OnItemCli
 
     private OnPlaylistsListListener mListener;
     private AbsListView mListView;
-    private PlaylistsAdapter mAdapter;
+    private PlaylistsListAdapter mAdapter;
 
 
     /***************************************************
      * INITIALISATION
      ***************************************************/
-    public PlaylistsFragment() {
+    public PlaylistsListFragment() {
     }
 
-    public static PlaylistsFragment newInstance(int results, String artist) {
-        PlaylistsFragment fragment = new PlaylistsFragment();
+    public static PlaylistsListFragment newInstance() {
+        PlaylistsListFragment fragment = new PlaylistsListFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_RESULTS, results);
-        args.putString(ARG_ARTIST, artist);
+        args.putInt(ARG_RESULTS, 10);
+        args.putString(ARG_ARTIST, "Linkin Park");
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,7 +59,7 @@ public class PlaylistsFragment extends Fragment implements AbsListView.OnItemCli
             mArtist = getArguments().getString(ARG_ARTIST);
         }
 
-        mAdapter = new PlaylistsAdapter(getActivity());
+        mAdapter = new PlaylistsListAdapter(getActivity());
         getLoaderManager().initLoader(PLAYLISTS_LOADER_ID, null, this);
     }
 
@@ -66,24 +70,22 @@ public class PlaylistsFragment extends Fragment implements AbsListView.OnItemCli
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_playlists, container, false);
+        view = inflater.inflate(R.layout.fragment_playlists_list, container, false);
 
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
 
         mAddButton = ((Button) view.findViewById(R.id.button_playlist_add));
-        final PlaylistsFragment that = this;
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onButtonAddPlaylistClicked();
+                mListener.onButtonGoToFormAddPlaylistClicked();
             }
         });
 
         return view;
     }
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -108,7 +110,7 @@ public class PlaylistsFragment extends Fragment implements AbsListView.OnItemCli
      ***************************************************/
     @Override
     public android.support.v4.content.Loader<Playlist> onCreateLoader(int i, Bundle bundle) {
-        PlaylistsLoader loader = new PlaylistsLoader(getActivity());
+        PlaylistsListLoader loader = new PlaylistsListLoader(getActivity());
         loader.setArtist(mArtist);
         loader.setResults(mResults);
         return loader;
@@ -146,6 +148,6 @@ public class PlaylistsFragment extends Fragment implements AbsListView.OnItemCli
      ***************************************************/
     public interface OnPlaylistsListListener {
         void onPlaylistClicked(Playlist playlist);
-        void onButtonAddPlaylistClicked();
+        void onButtonGoToFormAddPlaylistClicked();
     }
 }

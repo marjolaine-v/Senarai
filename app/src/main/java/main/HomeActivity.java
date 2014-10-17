@@ -2,7 +2,6 @@ package main;
 
 import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -12,12 +11,16 @@ import android.support.v4.widget.DrawerLayout;
 
 import com.echonest.api.v4.Playlist;
 import com.marjolainevericel.senarai.R;
-import com.marjolainevericel.senarai.playlist.PlaylistsFragment;
+import com.marjolainevericel.senarai.playlist.PlaylistFormFragment;
+import com.marjolainevericel.senarai.playlist.PlaylistFragment;
+import com.marjolainevericel.senarai.playlist.PlaylistsListFragment;
 
 import java.util.HashMap;
 
 public class HomeActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, PlaylistsFragment.OnPlaylistsListListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        PlaylistsListFragment.OnPlaylistsListListener,
+        PlaylistFormFragment.OnPlaylistFormListener {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -49,17 +52,15 @@ public class HomeActivity extends FragmentActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         fragmentManager = getSupportFragmentManager();
-        Log.d("APP", "POSITION : " + String.valueOf(position));
         if(position == 0) {
-            Log.d("APP", "/ HOME");
             fragmentManager.beginTransaction()
                     .replace(R.id.container, HomeFragment.newInstance())
                     .commit();
         }
         else if(position == 1) {
-            Log.d("APP", "/ Playlists list");
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, PlaylistsFragment.newInstance(10, "Linkin Park"))
+                    .replace(R.id.container, PlaylistsListFragment.newInstance())
+                    .addToBackStack(null)
                     .commit();
         }
     }
@@ -100,10 +101,20 @@ public class HomeActivity extends FragmentActivity
     }
 
     @Override
-    public void onButtonAddPlaylistClicked() {
+    public void onButtonGoToFormAddPlaylistClicked() {
         Log.d("APP", ">>>>> On ajoute une playlist !");
         fragmentManager.beginTransaction()
-                .replace(R.id.container, HomeFragment.newInstance())
+                .replace(R.id.container, PlaylistFormFragment.newInstance())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onButtonAddPlaylistClicked(String title, String description) {
+        Log.d("APP", ">>>>> La playlist est ajoutée !");
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, PlaylistFragment.newInstance(title, description))
+                .addToBackStack(null)
                 .commit();
     }
 }

@@ -5,17 +5,19 @@ import android.content.Context;
 import com.echonest.api.v4.EchoNestException;
 import com.echonest.api.v4.Playlist;
 
+import java.util.HashMap;
+
 import server.EchoNestWrapper;
 
 /**
  * Created by Marjolaine on 16/10/2014.
  */
-public class PlaylistsLoader extends android.support.v4.content.AsyncTaskLoader<Playlist> {
+public class PlaylistsListLoader extends android.support.v4.content.AsyncTaskLoader<Playlist> {
     private int mResults;
     private String mArtist;
     private Playlist mPlaylist;
 
-    public PlaylistsLoader(Context context) {
+    public PlaylistsListLoader(Context context) {
         super(context);
     }
 
