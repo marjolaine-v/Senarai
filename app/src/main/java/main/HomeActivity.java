@@ -13,9 +13,11 @@ import android.support.v4.widget.DrawerLayout;
 import com.marjolainevericel.senarai.R;
 
 import artist.ArtistCardFragment;
+import playlists.Playlist;
 import playlists.PlaylistAddFormFragment;
 import playlists.PlaylistCardFragment;
 import playlists.PlaylistListFragment;
+import playlists.PlaylistsAdapter;
 import songs.SongAddFormFragment;
 import songs.SongCardFragment;
 import songs.SongListFragment;
@@ -31,6 +33,9 @@ public class HomeActivity extends FragmentActivity
     private CharSequence mTitle;
     private FragmentManager fragmentManager;
 
+    // TEST
+    public PlaylistsAdapter playlistsAdapter;
+
 
     /***************************************************
      * INITIALISATION
@@ -45,6 +50,8 @@ public class HomeActivity extends FragmentActivity
         mTitle = getTitle();
 
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        playlistsAdapter = new PlaylistsAdapter(this.getApplicationContext(), 30);
     }
 
 
@@ -58,7 +65,7 @@ public class HomeActivity extends FragmentActivity
             changeFragment(R.id.container, HomeFragment.newInstance(), false);
         }
         else if(position == 1) {
-            changeFragment(R.id.container, PlaylistListFragment.newInstance(), false);
+            changeFragment(R.id.container, PlaylistListFragment.newInstance(playlistsAdapter), false);
         }
     }
 
@@ -104,13 +111,16 @@ public class HomeActivity extends FragmentActivity
         }
     }
 
-
     /***************************************************
      * PLAYLISTS LIST
      ***************************************************/
     @Override
     public void onGoToAddPlaylistButtonClicked() {
         changeFragment(R.id.container, PlaylistAddFormFragment.newInstance(), false);
+    }
+    @Override
+    public void onPlaylistClicked(Playlist playlist) {
+        Log.d("APP", ">>>>>>>>> " + playlist.getTitle());
     }
 
 
@@ -119,6 +129,9 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onAddPlaylistButtonClicked(String title, String description) {
+        Playlist myPlaylist = new Playlist(title);
+        myPlaylist.setDescription(description);
+        playlistsAdapter.add(myPlaylist);
         changeFragment(R.id.container, PlaylistCardFragment.newInstance(title, description), false);
         changeFragment(R.id.container_bottom, SongListFragment.newInstance(title, description), true);
     }
