@@ -15,7 +15,7 @@
         android:id="@+id/song_list_add_song_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ajouter"
+        android:text="Ajouter une chanson"
         />
 
 </LinearLayout>

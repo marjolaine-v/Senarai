@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/song_card_time"
+        android:id="@+id/song_card_duration"
         android:layout_gravity="left" />
 
 </LinearLayout>

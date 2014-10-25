@@ -74,7 +74,7 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onAddSongButtonClicked();
+                mListener.onGoToAddSongButtonClicked();
             }
         });
 
@@ -116,7 +116,7 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
     public interface OnSongListListener {
         // TODO: Update argument type and name
         public void onSongListClicked(String id);
-        public void onAddSongButtonClicked();
+        public void onGoToAddSongButtonClicked();
     }
 
 }

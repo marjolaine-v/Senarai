@@ -9,15 +9,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.Toast;
 
 import com.marjolainevericel.senarai.R;
 
 import artist.ArtistCardFragment;
-import playlists.Playlist;
+import playlists.PlaylistCustom;
 import playlists.PlaylistAddFormFragment;
 import playlists.PlaylistCardFragment;
 import playlists.PlaylistListFragment;
 import playlists.PlaylistsAdapter;
+import server.EchoNestWrapper;
 import songs.SongAddFormFragment;
 import songs.SongCardFragment;
 import songs.SongListFragment;
@@ -27,7 +29,8 @@ public class HomeActivity extends FragmentActivity
         PlaylistListFragment.OnPlaylistListListener,
         PlaylistAddFormFragment.OnPlaylistAddFormListener,
         SongListFragment.OnSongListListener,
-        SongAddFormFragment.OnSongAddFormListener {
+        SongAddFormFragment.OnSongAddFormListener,
+        PlaylistCardFragment.OnPlaylistCardListener {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -118,10 +121,13 @@ public class HomeActivity extends FragmentActivity
     public void onGoToAddPlaylistButtonClicked() {
         changeFragment(R.id.container, PlaylistAddFormFragment.newInstance(), false);
     }
-    @Override
-    public void onPlaylistClicked(Playlist playlist) {
+    /*@Override
+    public void onPlaylistClicked(PlaylistCustom playlist) {
         Log.d("APP", ">>>>>>>>> " + playlist.getTitle());
-    }
+        Toast.makeText(this, "Playlist cliquée", Toast.LENGTH_SHORT).show();
+        //changeFragment(R.id.container, PlaylistCardFragment.newInstance(playlist.getTitle(), playlist.getDescription()), false);
+        //changeFragment(R.id.container_bottom, PlaylistCardFragment.newInstance(playlist.getTitle(), playlist.getDescription()), true);
+    }*/
 
 
     /***************************************************
@@ -129,11 +135,22 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onAddPlaylistButtonClicked(String title, String description) {
-        Playlist myPlaylist = new Playlist(title);
+        PlaylistCustom myPlaylist = new PlaylistCustom(title);
         myPlaylist.setDescription(description);
         playlistsAdapter.add(myPlaylist);
-        changeFragment(R.id.container, PlaylistCardFragment.newInstance(title, description), false);
+        changeFragment(R.id.container, PlaylistCardFragment.newInstance(myPlaylist), false);
         changeFragment(R.id.container_bottom, SongListFragment.newInstance(title, description), true);
+    }
+
+
+    /***************************************************
+     * PLAYLIST CARD
+     ***************************************************/
+    @Override
+    public void onRemovePlaylistButtonClicked(PlaylistCustom playlist) {
+        Toast.makeText(this, "La playlist " + playlist.getTitle() + " a été supprimée.", Toast.LENGTH_SHORT).show();
+        playlistsAdapter.remove(playlist);
+        changeFragment(R.id.container, PlaylistListFragment.newInstance(playlistsAdapter), false);
     }
 
 
@@ -146,7 +163,7 @@ public class HomeActivity extends FragmentActivity
         changeFragment(R.id.container_bottom, ArtistCardFragment.newInstance("Linkin Park"), true);
     }
     @Override
-    public void onAddSongButtonClicked() {
+    public void onGoToAddSongButtonClicked() {
         changeFragment(R.id.container, SongAddFormFragment.newInstance(), false);
     }
 
@@ -156,6 +173,6 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onAddSongButtonClicked(String title, String artist) {
-        Log.d("APP", "On va matcher Echo Nest pour chercher une musique " + title + " d'un artiste " + artist);
+        Toast.makeText(this, "On va chercher l'API pour trouver une chanson qui match avec : '" + title + "' ou '" + artist + "'.", Toast.LENGTH_SHORT).show();
     }
 }

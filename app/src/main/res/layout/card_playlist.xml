@@ -2,24 +2,48 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#e3e3e3"
+    android:layout_margin="10dp"
+    >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Playlist card"
         android:id="@+id/playlist_card_title"
+        android:textColor="#3c3c3c"
+        android:textAllCaps="true"
+        android:textSize="18dp"
         android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Playlist card"
+        android:textColor="#3a3f30"
+        android:textSize="13dp"
         android:id="@+id/playlist_card_description"
         android:layout_gravity="left" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0 chanson"
+        android:textColor="#3a3f30"
+        android:textSize="13dp"
+        android:id="@+id/playlist_card_number_songs"
+        android:layout_gravity="left" />
+
     <Button
+        android:id="@+id/playlist_card_remove_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Supprimer"/>
+
+    <Button
+        android:id="@+id/playlist_card_edit_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Modifier"/>
 </LinearLayout>

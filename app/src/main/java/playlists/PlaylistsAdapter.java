@@ -7,11 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.echonest.api.v4.Song;
 import com.marjolainevericel.senarai.R;
 
 
-public class PlaylistsAdapter extends ArrayAdapter<Playlist> {
+public class PlaylistsAdapter extends ArrayAdapter<PlaylistCustom> {
 
     private final LayoutInflater mInflater;
 
@@ -33,8 +32,9 @@ public class PlaylistsAdapter extends ArrayAdapter<Playlist> {
             view = convertView;
         }
 
-        Playlist playlist = getItem(position);
+        PlaylistCustom playlist = getItem(position);
 
+        // View's elements
         ((TextView) view.findViewById(R.id.playlist_card_title)).setText(playlist.getTitle());
         ((TextView) view.findViewById(R.id.playlist_card_description)).setText(playlist.getDescription());
 

@@ -7,6 +7,14 @@
     android:focusableInTouchMode="true"
     >
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ajout d'une playlist"
+        android:textSize="20dp"
+        android:textAllCaps="true"
+        />
+
     <EditText
         android:id="@+id/playlist_form_title"
         android:layout_width="match_parent"

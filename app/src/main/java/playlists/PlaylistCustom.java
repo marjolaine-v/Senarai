@@ -1,11 +1,14 @@
 package playlists;
 
-public class Playlist {
+import com.echonest.api.v4.Song;
+
+public class PlaylistCustom {
 
     protected String mTitle;
     protected String mDescription;
+    /*protected playlists.SongsAdapter songs;*/
 
-    public Playlist(String title) {
+    public PlaylistCustom(String title) {
         mTitle = title;
     }
 

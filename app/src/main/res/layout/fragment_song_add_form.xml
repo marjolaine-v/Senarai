@@ -5,11 +5,13 @@
     android:orientation="vertical"
     tools:context="songs.SongAddForm">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Ajout d'une chanson" />
+        android:layout_height="wrap_content"
+        android:text="Ajout d'une chanson"
+        android:textSize="20dp"
+        android:textAllCaps="true"
+        />
 
     <EditText
         android:id="@+id/song_add_form_title"

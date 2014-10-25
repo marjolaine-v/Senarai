@@ -4,9 +4,13 @@ import android.content.Context;
 
 import com.echonest.api.v4.EchoNestAPI;
 import com.echonest.api.v4.EchoNestException;
+import com.echonest.api.v4.Params;
 import com.echonest.api.v4.Playlist;
 import com.echonest.api.v4.PlaylistParams;
+import com.echonest.api.v4.Song;
 import com.marjolainevericel.senarai.R;
+
+import java.util.List;
 
 /**
  * Created by Marjolaine on 16/10/2014.
