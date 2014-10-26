@@ -13,12 +13,10 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import com.marjolainevericel.senarai.R;
 
+import playlists.PlaylistCustom;
+
 public class SongListFragment extends Fragment implements AbsListView.OnItemClickListener {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
     private OnSongListListener mListener;
     private AbsListView mListView;
     private ListAdapter mAdapter;
@@ -31,12 +29,8 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
      * INIT
      ***************************************************/
     public SongListFragment() { }
-    public static SongListFragment newInstance(String param1, String param2) {
+    public static SongListFragment newInstance(PlaylistCustom playlist) {
         SongListFragment fragment = new SongListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -47,20 +41,10 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_song_list, container, false);
 
         // Set the adapter
@@ -105,7 +89,6 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (null != mListener) {
-            mListener.onSongListClicked(DummyContent.ITEMS.get(position).id);
         }
     }
 
@@ -114,7 +97,6 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
      * INTERFACE
      ***************************************************/
     public interface OnSongListListener {
-        // TODO: Update argument type and name
         public void onSongListClicked(String id);
         public void onGoToAddSongButtonClicked();
     }

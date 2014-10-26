@@ -4,17 +4,14 @@ import android.content.Context;
 
 import com.echonest.api.v4.EchoNestAPI;
 import com.echonest.api.v4.EchoNestException;
-import com.echonest.api.v4.Params;
 import com.echonest.api.v4.Playlist;
 import com.echonest.api.v4.PlaylistParams;
 import com.echonest.api.v4.Song;
+import com.echonest.api.v4.SongParams;
 import com.marjolainevericel.senarai.R;
 
 import java.util.List;
 
-/**
- * Created by Marjolaine on 16/10/2014.
- */
 public class EchoNestWrapper {
     private static EchoNestWrapper sInstance;
     private EchoNestAPI mApi;
@@ -25,7 +22,7 @@ public class EchoNestWrapper {
 
     public static EchoNestWrapper with(Context context) {
         if (sInstance == null) {
-            sInstance = new EchoNestWrapper(context.getString(R.string.echo_nest_api));
+            sInstance = new EchoNestWrapper(context.getString(R.string.echo_nest_api_perso));
         }
         return sInstance;
     }
@@ -39,5 +36,14 @@ public class EchoNestWrapper {
         params.setType(PlaylistParams.PlaylistType.ARTIST_RADIO);
         params.setResults(results);
         return mApi.createStaticPlaylist(params);
+    }
+
+    public List<Song> getSongsByKeys(String title, String artist) throws
+            EchoNestException {
+        SongParams params = new SongParams();
+        params.setTitle(title);
+        params.setArtist(artist);
+        params.setResults(10);
+        return mApi.searchSongs(params);
     }
 }

@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 
+import com.echonest.api.v4.Song;
 import com.marjolainevericel.senarai.R;
 
 import artist.ArtistCardFragment;
@@ -19,10 +19,10 @@ import playlists.PlaylistAddFormFragment;
 import playlists.PlaylistCardFragment;
 import playlists.PlaylistListFragment;
 import playlists.PlaylistsAdapter;
-import server.EchoNestWrapper;
 import songs.SongAddFormFragment;
 import songs.SongCardFragment;
 import songs.SongListFragment;
+import songs.SongListResultsFragment;
 
 public class HomeActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
@@ -30,13 +30,12 @@ public class HomeActivity extends FragmentActivity
         PlaylistAddFormFragment.OnPlaylistAddFormListener,
         SongListFragment.OnSongListListener,
         SongAddFormFragment.OnSongAddFormListener,
-        PlaylistCardFragment.OnPlaylistCardListener {
+        PlaylistCardFragment.OnPlaylistCardListener,
+        SongListResultsFragment.OnSongListResultsListener {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private FragmentManager fragmentManager;
-
-    // TEST
     public PlaylistsAdapter playlistsAdapter;
 
 
@@ -121,25 +120,23 @@ public class HomeActivity extends FragmentActivity
     public void onGoToAddPlaylistButtonClicked() {
         changeFragment(R.id.container, PlaylistAddFormFragment.newInstance(), false);
     }
-    /*@Override
+    @Override
     public void onPlaylistClicked(PlaylistCustom playlist) {
-        Log.d("APP", ">>>>>>>>> " + playlist.getTitle());
-        Toast.makeText(this, "Playlist cliquée", Toast.LENGTH_SHORT).show();
-        //changeFragment(R.id.container, PlaylistCardFragment.newInstance(playlist.getTitle(), playlist.getDescription()), false);
-        //changeFragment(R.id.container_bottom, PlaylistCardFragment.newInstance(playlist.getTitle(), playlist.getDescription()), true);
-    }*/
+        changeFragment(R.id.container, PlaylistCardFragment.newInstance(playlist), false);
+        changeFragment(R.id.container_bottom, SongListFragment.newInstance(playlist), true);
+    }
 
 
     /***************************************************
      * PLAYLIST ADD FORM
      ***************************************************/
     @Override
-    public void onAddPlaylistButtonClicked(String title, String description) {
-        PlaylistCustom myPlaylist = new PlaylistCustom(title);
-        myPlaylist.setDescription(description);
-        playlistsAdapter.add(myPlaylist);
-        changeFragment(R.id.container, PlaylistCardFragment.newInstance(myPlaylist), false);
-        changeFragment(R.id.container_bottom, SongListFragment.newInstance(title, description), true);
+    public void onAddPlaylistButtonClicked(String title, String description, Boolean isRandomPlaylist) {
+        PlaylistCustom playlist = new PlaylistCustom(title);
+        playlist.setDescription(description);
+        playlistsAdapter.add(playlist);
+        changeFragment(R.id.container, PlaylistCardFragment.newInstance(playlist), false);
+        changeFragment(R.id.container_bottom, SongListFragment.newInstance(playlist), true);
     }
 
 
@@ -159,8 +156,8 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onSongListClicked(String id) {
-        changeFragment(R.id.container, SongCardFragment.newInstance(id), false);
-        changeFragment(R.id.container_bottom, ArtistCardFragment.newInstance("Linkin Park"), true);
+        //changeFragment(R.id.container, SongCardFragment.newInstance(id), false);
+        //changeFragment(R.id.container_bottom, ArtistCardFragment.newInstance("Linkin Park"), true);
     }
     @Override
     public void onGoToAddSongButtonClicked() {
@@ -173,6 +170,17 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onAddSongButtonClicked(String title, String artist) {
-        Toast.makeText(this, "On va chercher l'API pour trouver une chanson qui match avec : '" + title + "' ou '" + artist + "'.", Toast.LENGTH_SHORT).show();
+        changeFragment(R.id.container, SongListResultsFragment.newInstance(title, artist), false);
+    }
+
+
+    /***************************************************
+     * SONG LIST RESULTS
+     ***************************************************/
+    @Override
+    public void onSongListResultsClicked(Song song) {
+        Toast.makeText(getApplicationContext(), "Chanson clickée : " + song.getTitle(), Toast.LENGTH_LONG).show();
+        changeFragment(R.id.container, SongCardFragment.newInstance(song), false);
+        changeFragment(R.id.container_bottom, ArtistCardFragment.newInstance(song), true);
     }
 }

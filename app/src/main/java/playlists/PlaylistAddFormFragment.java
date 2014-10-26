@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class PlaylistAddFormFragment extends Fragment {
     private Button mAddButton;
     private EditText mEditTitle;
     private EditText mEditDescription;
+    private CheckBox mCheckboxRandom;
     Context context;
 
 
@@ -45,6 +47,7 @@ public class PlaylistAddFormFragment extends Fragment {
 
         mEditTitle = ((EditText) view.findViewById(R.id.playlist_form_title));
         mEditDescription = ((EditText) view.findViewById(R.id.playlist_form_description));
+        mCheckboxRandom = ((CheckBox) view.findViewById(R.id.playlist_form_checked));
 
         mAddButton = (Button) view.findViewById(R.id.playlist_add_form_button);
         mAddButton.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +55,7 @@ public class PlaylistAddFormFragment extends Fragment {
             public void onClick(View view) {
                 hideKeyboard(view);
                 if(!mEditTitle.getText().toString().matches("")) {
-                    mListener.onAddPlaylistButtonClicked(mEditTitle.getText().toString(), mEditDescription.getText().toString());
+                    mListener.onAddPlaylistButtonClicked(mEditTitle.getText().toString(), mEditDescription.getText().toString(), mCheckboxRandom.isChecked());
                 }
                 else {
                     Toast.makeText(context, "Merci d'ajouter un titre à votre playlist", Toast.LENGTH_LONG).show();
@@ -95,6 +98,6 @@ public class PlaylistAddFormFragment extends Fragment {
      * INTERFACE
      ***************************************************/
     public interface OnPlaylistAddFormListener {
-        void onAddPlaylistButtonClicked(String title, String description);
+        void onAddPlaylistButtonClicked(String title, String description, Boolean isRandomPlaylist);
     }
 }

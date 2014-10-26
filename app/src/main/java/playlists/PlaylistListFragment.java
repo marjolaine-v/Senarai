@@ -9,10 +9,11 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.marjolainevericel.senarai.R;
 
-public class PlaylistListFragment extends Fragment //implements AdapterView.OnItemClickListener
+public class PlaylistListFragment extends Fragment implements AdapterView.OnItemClickListener
 {
 
     private static PlaylistsAdapter mPlaylistsAdapter;
@@ -41,7 +42,7 @@ public class PlaylistListFragment extends Fragment //implements AdapterView.OnIt
         // List
         mListView = (AbsListView) view.findViewById(R.id.list);
         mListView.setAdapter(mPlaylistsAdapter);
-        //mListView.setOnItemClickListener(this);
+        mListView.setOnItemClickListener(this);
 
         // Button "add a playlist"
         mAddButton = (Button) view.findViewById(R.id.playlist_list_add_playlist_button);
@@ -72,20 +73,20 @@ public class PlaylistListFragment extends Fragment //implements AdapterView.OnIt
         mListener = null;
     }
 
-    /*@Override
+    @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         //view.setTag(0, mPlaylistsAdapter.getItem(position));
         if (null != mListener) {
-            /*mListener.onPlaylistClicked(mPlaylistsAdapter.getItem(position));*
+            mListener.onPlaylistClicked(mPlaylistsAdapter.getItem(position));
         }
-    }*/
+    }
 
 
     /***************************************************
      * INTERFACE
      ***************************************************/
     public interface OnPlaylistListListener {
-        /*void onPlaylistClicked(PlaylistCustom playlist);*/
+        void onPlaylistClicked(PlaylistCustom playlist);
         void onGoToAddPlaylistButtonClicked();
     }
 }

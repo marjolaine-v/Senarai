@@ -1,22 +1,23 @@
-package playlists;
+package songs;
+
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
+import com.echonest.api.v4.Song;
 import com.marjolainevericel.senarai.R;
 
-
-public class PlaylistsAdapter extends ArrayAdapter<PlaylistCustom> {
+public class SongsAdapter extends ArrayAdapter<Song> {
 
     private final LayoutInflater mInflater;
 
-    public PlaylistsAdapter(Context context, int resource) {
-        super(context, resource);
+    public SongsAdapter(Context context) {
+        super(context, android.R.layout.simple_list_item_2);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -33,11 +34,11 @@ public class PlaylistsAdapter extends ArrayAdapter<PlaylistCustom> {
             view = convertView;
         }
 
-        PlaylistCustom playlist = getItem(position);
+        Song song = getItem(position);
 
         // View's elements
-        ((TextView) view.findViewById(android.R.id.text1)).setText(playlist.getTitle());
-        ((TextView) view.findViewById(android.R.id.text2)).setText(playlist.getDescription());
+        ((TextView) view.findViewById(android.R.id.text1)).setText(song.getTitle());
+        ((TextView) view.findViewById(android.R.id.text2)).setText(song.getArtistName());
 
         return view;
     }
