@@ -25,7 +25,6 @@ public class ArtistCardFragment extends Fragment implements android.support.v4.a
 
     private static final int ARTIST_LOADER_ID = 16;
     private LayoutInflater mInflater;
-    static Artist mArtist;
     static String mName;
     private ProgressBar mPBHotttnesss;
     private LinearLayout mLayoutImages;
@@ -46,6 +45,15 @@ public class ArtistCardFragment extends Fragment implements android.support.v4.a
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLoaderManager().initLoader(ARTIST_LOADER_ID, null, this);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mName = null;
+        mPBHotttnesss = null;
+        mLayoutSongs = null;
+        mLayoutImages = null;
     }
 
 
@@ -120,12 +128,11 @@ public class ArtistCardFragment extends Fragment implements android.support.v4.a
             // API error
             Toast toast = Toast.makeText(getActivity(), getString(R.string.error_api), Toast.LENGTH_LONG);
             toast.show();
-            mArtist = null;
         }
     }
 
     @Override
     public void onLoaderReset(Loader<List<Artist>> listLoader) {
-        mArtist = null;
+
     }
 }

@@ -30,7 +30,7 @@ public class AddPlaylistEmptyFormFragment extends Fragment {
      * INIT
      ***************************************************/
     public AddPlaylistEmptyFormFragment() { }
-    public static AddPlaylistEmptyFormFragment newInstance(Context context) {
+    public static AddPlaylistEmptyFormFragment newInstance() {
         AddPlaylistEmptyFormFragment fragment = new AddPlaylistEmptyFormFragment();
         return fragment;
     }

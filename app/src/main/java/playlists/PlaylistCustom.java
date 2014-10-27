@@ -1,9 +1,5 @@
 package playlists;
 
-import android.widget.ListAdapter;
-
-import com.echonest.api.v4.Song;
-
 import songs.SongsAdapter;
 
 public class PlaylistCustom {

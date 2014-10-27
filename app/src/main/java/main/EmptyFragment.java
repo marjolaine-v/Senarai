@@ -12,7 +12,6 @@ import com.marjolainevericel.senarai.R;
 
 public class EmptyFragment extends Fragment {
 
-
     public EmptyFragment() {}
     public static EmptyFragment newInstance() {
         EmptyFragment fragment = new EmptyFragment();

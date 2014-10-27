@@ -32,7 +32,7 @@ public class AddPlaylistRandomFormFragment extends Fragment {
     private EditText mEditNumberResults;
     private int mNumberResults;
     private Button mAddButton;
-    Context context;
+    static Context mContext;
 
 
     /***************************************************
@@ -41,6 +41,7 @@ public class AddPlaylistRandomFormFragment extends Fragment {
     public AddPlaylistRandomFormFragment() { }
     public static AddPlaylistRandomFormFragment newInstance(Context context) {
         AddPlaylistRandomFormFragment fragment = new AddPlaylistRandomFormFragment();
+        mContext = context;
         return fragment;
     }
 
@@ -52,8 +53,6 @@ public class AddPlaylistRandomFormFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_playlist_random_add_form, container, false);
 
-        context = getActivity().getApplicationContext();
-
         mEditTitle = ((EditText) view.findViewById(R.id.playlist_empty_add_form_title));
         mEditDescription = ((EditText) view.findViewById(R.id.playlist_empty_add_form_description));
         mEditNumberResults = ((EditText) view.findViewById(R.id.playlist_empty_add_form_number_results));
@@ -64,7 +63,7 @@ public class AddPlaylistRandomFormFragment extends Fragment {
             public void onClick(View view) {
                 hideKeyboard(view);
                 if(mEditTitle.getText().toString().matches("")) {
-                    Toast.makeText(context, "Merci d'ajouter un titre à votre playlist", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Merci d'ajouter un titre à votre playlist", Toast.LENGTH_LONG).show();
                 }
                 else {
                     Toast.makeText(getActivity().getApplicationContext(), "Enregistrement de la playlist", Toast.LENGTH_LONG).show();

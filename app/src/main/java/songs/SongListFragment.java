@@ -7,14 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 
-import com.echonest.api.v4.Song;
 import com.marjolainevericel.senarai.R;
 
 import playlists.PlaylistCustom;
@@ -23,11 +18,8 @@ public class SongListFragment extends Fragment {
 
     private static PlaylistCustom mPlaylistCustom;
     private OnSongListListener mListener;
-    //private AbsListView mListView;
     private LinearLayout mLayout;
     private static SongsAdapter mSongs;
-
-    // My vars
     private static Button mAddButton;
 
 

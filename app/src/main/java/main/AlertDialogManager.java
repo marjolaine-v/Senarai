@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-import playlists.PlaylistCustom;
-
 public class AlertDialogManager {
 
     private AlertDialog.Builder mAlertDialogBuilder;

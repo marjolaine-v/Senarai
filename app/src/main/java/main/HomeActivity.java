@@ -39,7 +39,6 @@ public class HomeActivity extends FragmentActivity
         SongAddFormFragment.OnSongAddFormListener,
         PlaylistCardFragment.OnPlaylistCardListener,
         SongCardFragment.OnSongCardListener,
-        SongListResultsFragment.OnSongListResultsListener,
         AlertDialogManager.OnAlertListener,
         SongsAdapter.OnSongsAdapterListener,
         PlaylistsCustomAdapter.OnPlaylistsCustomAdapterListener {
@@ -48,7 +47,6 @@ public class HomeActivity extends FragmentActivity
     private CharSequence mTitle;
     private FragmentManager fragmentManager;
     public PlaylistsCustomAdapter playlistsCustomAdapter;
-    private EmptyFragment emptyFragment;
 
     private int ADD_PLAYLIST_ALERT_DIALOG_ID = 0;
 
@@ -61,8 +59,6 @@ public class HomeActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_home);
-
-        emptyFragment = new EmptyFragment();
 
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -133,7 +129,9 @@ public class HomeActivity extends FragmentActivity
         changeFragment(PlaylistListFragment.newInstance(playlistsCustomAdapter), EmptyFragment.newInstance());
     }
     @Override
-    public void onGoToSearchButtonClicked() { }
+    public void onGoToSearchButtonClicked() {
+        Toast.makeText(getApplicationContext(), "La fonction de recherche n'est pas encore prévue dans l'application. Revenez plus tard !", Toast.LENGTH_LONG).show();
+    }
 
     /***************************************************
      * PLAYLISTS LIST
@@ -189,7 +187,8 @@ public class HomeActivity extends FragmentActivity
     }
     @Override
     public void onGoToAddSongButtonClicked() {
-        changeFragment(SongAddFormFragment.newInstance(), EmptyFragment.newInstance());
+        Toast.makeText(getApplicationContext(), "L'ajout de chansons une à une n'est pas encore prévu dans l'application. Revenez plus tard !", Toast.LENGTH_LONG).show();
+        //changeFragment(SongAddFormFragment.newInstance(), EmptyFragment.newInstance());
     }
 
 
@@ -199,16 +198,6 @@ public class HomeActivity extends FragmentActivity
     @Override
     public void onAddSongButtonClicked(String title, String artist) {
         changeFragment(SongListResultsFragment.newInstance(title, artist), EmptyFragment.newInstance());
-    }
-
-
-    /***************************************************
-     * SONG LIST RESULTS
-     ***************************************************/
-    @Override
-    public void onSongListResultsClicked(Song song) {
-        Toast.makeText(getApplicationContext(), "Chanson clickée : " + song.getTitle(), Toast.LENGTH_LONG).show();
-        changeFragment(SongCardFragment.newInstance(song), ArtistCardFragment.newInstance(song));
     }
 
 
@@ -226,7 +215,7 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onAlertPlaylistEmptyAddClicked() {
-        changeFragment(AddPlaylistEmptyFormFragment.newInstance(getApplicationContext()), EmptyFragment.newInstance());
+        changeFragment(AddPlaylistEmptyFormFragment.newInstance(), EmptyFragment.newInstance());
     }
     @Override
     public void onAlertPlaylistRandomAddClicked() {
