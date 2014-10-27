@@ -3,12 +3,14 @@ package playlists;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.marjolainevericel.senarai.R;
@@ -20,6 +22,7 @@ public class PlaylistListFragment extends Fragment implements AdapterView.OnItem
     private OnPlaylistListListener mListener;
     private Button mAddButton;
     private AbsListView mListView;
+    private LinearLayout mLayout;
 
     /***************************************************
      * INIT
@@ -40,9 +43,14 @@ public class PlaylistListFragment extends Fragment implements AdapterView.OnItem
         View view = inflater.inflate(R.layout.fragment_playlist_list, container, false);
 
         // List
-        mListView = (AbsListView) view.findViewById(R.id.list);
+        /*mListView = (AbsListView) view.findViewById(R.id.list);
         mListView.setAdapter(mPlaylistsCustomAdapter);
-        mListView.setOnItemClickListener(this);
+        mListView.setOnItemClickListener(this);*/
+        mLayout = (LinearLayout)view.findViewById(R.id.list);
+        for (int i = 0 ; i < mPlaylistsCustomAdapter.getCount() ; i++) {
+            View item = mPlaylistsCustomAdapter.getView(i, null, null);
+            mLayout.addView(item);
+        }
 
         // Button "add a playlist"
         mAddButton = (Button) view.findViewById(R.id.playlist_list_add_playlist_button);

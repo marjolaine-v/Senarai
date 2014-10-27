@@ -1,6 +1,7 @@
 package songs;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 
 import com.echonest.api.v4.Song;
@@ -21,7 +23,8 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
 
     private static PlaylistCustom mPlaylistCustom;
     private OnSongListListener mListener;
-    private AbsListView mListView;
+    //private AbsListView mListView;
+    private LinearLayout mLayout;
     private static SongsAdapter mSongs;
 
     // My vars
@@ -32,10 +35,13 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
      * INIT
      ***************************************************/
     public SongListFragment() { }
-    public static SongListFragment newInstance(PlaylistCustom playlist) {
+    public static SongListFragment newInstance(Context context, Activity activity, PlaylistCustom playlist) {
         SongListFragment fragment = new SongListFragment();
         mPlaylistCustom = playlist;
-        mSongs = playlist.getSongs();
+        mSongs = new SongsAdapter(context, activity);
+        if(playlist.getSongs() != null) {
+            mSongs = playlist.getSongs();
+        }
         return fragment;
     }
 
@@ -53,11 +59,14 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
         View view = inflater.inflate(R.layout.fragment_song_list, container, false);
 
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(R.id.list);
+        /*mListView = (AbsListView) view.findViewById(R.id.list);
         mListView.setAdapter(mSongs);
-
-        // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
+        mListView.setOnItemClickListener(this);*/
+        mLayout = (LinearLayout)view.findViewById(R.id.list);
+        for (int i = 0 ; i < mSongs.getCount() ; i++) {
+            View item = mSongs.getView(i, null, null);
+            mLayout.addView(item);
+        }
 
         mAddButton = ((Button) view.findViewById(R.id.song_list_add_song_button));
         mAddButton.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +103,7 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (null != mListener) {
-            mListener.onSongListClicked(mSongs.getItem(position));
+
         }
     }
 

@@ -57,8 +57,6 @@ public class AddPlaylistEmptyFormFragment extends Fragment {
                     Toast.makeText(context, "Merci d'ajouter un titre à votre playlist", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Enregistrement de la playlist", Toast.LENGTH_LONG).show();
-
                     mTitle = mEditTitle.getText().toString();
                     mDescription = mEditDescription.getText().toString();
 

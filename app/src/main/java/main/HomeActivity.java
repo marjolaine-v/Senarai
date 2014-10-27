@@ -39,7 +39,9 @@ public class HomeActivity extends FragmentActivity
         SongAddFormFragment.OnSongAddFormListener,
         PlaylistCardFragment.OnPlaylistCardListener,
         SongListResultsFragment.OnSongListResultsListener,
-        AlertDialogManager.OnAlertListener {
+        AlertDialogManager.OnAlertListener,
+        SongsAdapter.OnSongsAdapterListener,
+        PlaylistsCustomAdapter.OnPlaylistsCustomAdapterListener {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -63,7 +65,7 @@ public class HomeActivity extends FragmentActivity
 
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        playlistsCustomAdapter = new PlaylistsCustomAdapter(this.getApplicationContext(), 30);
+        playlistsCustomAdapter = new PlaylistsCustomAdapter(this.getApplicationContext(), 30, HomeActivity.this);
     }
 
 
@@ -150,7 +152,7 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onPlaylistClicked(PlaylistCustom playlist) {
-        changeFragment(PlaylistCardFragment.newInstance(playlist), SongListFragment.newInstance(playlist));
+        changeFragment(PlaylistCardFragment.newInstance(playlist), SongListFragment.newInstance(this, HomeActivity.this, playlist));
     }
     @Override
     public void onGoToAddPlaylistButtonClicked() {
@@ -169,13 +171,13 @@ public class HomeActivity extends FragmentActivity
     public void onAddPlaylistButtonClicked(String title, String description, List<Song> list) {
         PlaylistCustom playlistCustom = new PlaylistCustom(title);
         playlistCustom.setDescription(description);
-        SongsAdapter songs = new SongsAdapter(getApplicationContext());
+        SongsAdapter songs = new SongsAdapter(getApplicationContext(), HomeActivity.this);
         if(list != null && list.size() > 0) {
             songs.addAll(list);
             playlistCustom.setSongs(songs);
         }
         playlistsCustomAdapter.add(playlistCustom);
-        changeFragment(PlaylistCardFragment.newInstance(playlistCustom), SongListFragment.newInstance(playlistCustom));
+        changeFragment(PlaylistCardFragment.newInstance(playlistCustom), SongListFragment.newInstance(getApplicationContext(), HomeActivity.this, playlistCustom));
     }
 
 

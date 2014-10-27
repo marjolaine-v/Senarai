@@ -6,11 +6,18 @@
     android:orientation="vertical"
     tools:context="songs.SongFragment">
 
-    <ListView
+    <!--<ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        />
+        />-->
+
+    <LinearLayout
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+    />
 
     <Button
         android:id="@+id/song_list_add_song_button"

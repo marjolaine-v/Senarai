@@ -43,7 +43,7 @@ public class SongListResultsFragment extends Fragment implements AbsListView.OnI
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mSongsAdapter = new SongsAdapter(getActivity());
+        mSongsAdapter = new SongsAdapter(getActivity(), getActivity());
         getLoaderManager().initLoader(SONGS_LOADER_ID, null, this);
     }
 
