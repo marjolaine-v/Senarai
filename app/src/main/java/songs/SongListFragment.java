@@ -17,6 +17,7 @@ import playlists.PlaylistCustom;
 
 public class SongListFragment extends Fragment implements AbsListView.OnItemClickListener {
 
+    private static PlaylistCustom playlistCustom;
     private OnSongListListener mListener;
     private AbsListView mListView;
     private ListAdapter mAdapter;
@@ -31,6 +32,7 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
     public SongListFragment() { }
     public static SongListFragment newInstance(PlaylistCustom playlist) {
         SongListFragment fragment = new SongListFragment();
+        playlistCustom = playlist;
         return fragment;
     }
 
@@ -49,7 +51,7 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(R.id.list);
-        mListView.setAdapter(mAdapter);
+        mListView.setAdapter(playlistCustom.getSongs());
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);

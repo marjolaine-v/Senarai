@@ -11,11 +11,11 @@ import android.widget.TextView;
 import com.marjolainevericel.senarai.R;
 
 
-public class PlaylistsAdapter extends ArrayAdapter<PlaylistCustom> {
+public class PlaylistsCustomAdapter extends ArrayAdapter<PlaylistCustom> {
 
     private final LayoutInflater mInflater;
 
-    public PlaylistsAdapter(Context context, int resource) {
+    public PlaylistsCustomAdapter(Context context, int resource) {
         super(context, resource);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -26,7 +26,7 @@ public class PlaylistsAdapter extends ArrayAdapter<PlaylistCustom> {
 
         if (convertView == null)
         {
-            view = mInflater.inflate(android.R.layout.simple_list_item_2, parent, false);
+            view = mInflater.inflate(R.layout.simple_list_item, parent, false);
         }
         else
         {
@@ -36,8 +36,8 @@ public class PlaylistsAdapter extends ArrayAdapter<PlaylistCustom> {
         PlaylistCustom playlist = getItem(position);
 
         // View's elements
-        ((TextView) view.findViewById(android.R.id.text1)).setText(playlist.getTitle());
-        ((TextView) view.findViewById(android.R.id.text2)).setText(playlist.getDescription());
+        ((TextView) view.findViewById(R.id.text1)).setText(playlist.getTitle());
+        ((TextView) view.findViewById(R.id.text2)).setText(playlist.getDescription());
 
         return view;
     }

@@ -5,51 +5,254 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:padding="20dp"
     >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ajout d'une playlist"
+        android:text="Ajout d'une playlist selon des critères"
         android:textSize="20dp"
         android:textAllCaps="true"
         />
 
     <EditText
-        android:id="@+id/playlist_form_title"
+        android:id="@+id/playlist_add_form_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Titre"
+        android:layout_marginBottom="10dp"
         />
 
     <EditText
-        android:id="@+id/playlist_form_description"
+        android:id="@+id/playlist_add_form_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Description"
         android:inputType="textMultiLine"
         android:ems="10"
+        android:layout_marginBottom="50dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Critères"
+        android:textSize="20dp"
+        android:textAllCaps="true"
+        />
+
+    <EditText
+        android:id="@+id/playlist_add_form_artist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Artiste dont s'inspirera la playlist"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:layout_marginBottom="10dp"
+        />
+
+    <EditText
+        android:id="@+id/playlist_add_form_song"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Chanson dont s'inspirera la playlist"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:layout_marginBottom="30dp"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:layout_marginBottom="30dp"
         >
-
-        <CheckBox
-            android:id="@+id/playlist_form_checked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Playlist aléatoire"
+            android:text="Type de musique"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/playlist_add_form_spinner_types"
             />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="30dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dançabilité"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tout le monde assis sur sa chaise"
+                android:layout_alignParentLeft="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ca va swinger sur la piste !"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/playlist_add_form_seekbar_dancability" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="30dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tempo"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tortue (0 BPM)"
+                android:layout_alignParentLeft="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lièvre (500 BPM)"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/playlist_add_form_seekbar_tempo" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="30dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Energie"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mamie energy"
+                android:layout_alignParentLeft="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monster energy"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/playlist_add_form_seekbar_energy" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="30dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mode"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mineur"
+                android:layout_alignParentLeft="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Majeur"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/playlist_add_form_seekbar_mode"
+            android:layout_below="@+id/intervals"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="30dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre de résultats"
+            />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:maxLength="2"
+            android:text="10"
+            android:id="@+id/playlist_add_form_number_results" />
+    </LinearLayout>
 
     <Button
         android:layout_width="match_parent"

@@ -16,7 +16,7 @@ import com.marjolainevericel.senarai.R;
 public class PlaylistListFragment extends Fragment implements AdapterView.OnItemClickListener
 {
 
-    private static PlaylistsAdapter mPlaylistsAdapter;
+    private static PlaylistsCustomAdapter mPlaylistsCustomAdapter;
     private OnPlaylistListListener mListener;
     private Button mAddButton;
     private AbsListView mListView;
@@ -25,9 +25,9 @@ public class PlaylistListFragment extends Fragment implements AdapterView.OnItem
      * INIT
      ***************************************************/
     public PlaylistListFragment() { }
-    public static PlaylistListFragment newInstance(PlaylistsAdapter playlistsAdapter) {
+    public static PlaylistListFragment newInstance(PlaylistsCustomAdapter playlistsCustomAdapter) {
         PlaylistListFragment fragment = new PlaylistListFragment();
-        mPlaylistsAdapter = playlistsAdapter;
+        mPlaylistsCustomAdapter = playlistsCustomAdapter;
         return fragment;
     }
 
@@ -41,7 +41,7 @@ public class PlaylistListFragment extends Fragment implements AdapterView.OnItem
 
         // List
         mListView = (AbsListView) view.findViewById(R.id.list);
-        mListView.setAdapter(mPlaylistsAdapter);
+        mListView.setAdapter(mPlaylistsCustomAdapter);
         mListView.setOnItemClickListener(this);
 
         // Button "add a playlist"
@@ -77,7 +77,7 @@ public class PlaylistListFragment extends Fragment implements AdapterView.OnItem
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         //view.setTag(0, mPlaylistsAdapter.getItem(position));
         if (null != mListener) {
-            mListener.onPlaylistClicked(mPlaylistsAdapter.getItem(position));
+            mListener.onPlaylistClicked(mPlaylistsCustomAdapter.getItem(position));
         }
     }
 
@@ -86,7 +86,7 @@ public class PlaylistListFragment extends Fragment implements AdapterView.OnItem
      * INTERFACE
      ***************************************************/
     public interface OnPlaylistListListener {
-        void onPlaylistClicked(PlaylistCustom playlist);
+        void onPlaylistClicked(PlaylistCustom playlistCustom);
         void onGoToAddPlaylistButtonClicked();
     }
 }

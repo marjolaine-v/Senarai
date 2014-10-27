@@ -27,7 +27,7 @@ public class SongsAdapter extends ArrayAdapter<Song> {
 
         if (convertView == null)
         {
-            view = mInflater.inflate(android.R.layout.simple_list_item_2, parent, false);
+            view = mInflater.inflate(R.layout.simple_list_item, parent, false);
         }
         else
         {
@@ -37,8 +37,8 @@ public class SongsAdapter extends ArrayAdapter<Song> {
         Song song = getItem(position);
 
         // View's elements
-        ((TextView) view.findViewById(android.R.id.text1)).setText(song.getTitle());
-        ((TextView) view.findViewById(android.R.id.text2)).setText(song.getArtistName());
+        ((TextView) view.findViewById(R.id.text1)).setText(song.getTitle());
+        ((TextView) view.findViewById(R.id.text2)).setText(song.getArtistName());
 
         return view;
     }

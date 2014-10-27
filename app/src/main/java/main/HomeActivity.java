@@ -5,24 +5,29 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.Adapter;
 import android.widget.Toast;
 
 import com.echonest.api.v4.Song;
 import com.marjolainevericel.senarai.R;
+
+import java.util.List;
 
 import artist.ArtistCardFragment;
 import playlists.PlaylistCustom;
 import playlists.PlaylistAddFormFragment;
 import playlists.PlaylistCardFragment;
 import playlists.PlaylistListFragment;
-import playlists.PlaylistsAdapter;
+import playlists.PlaylistsCustomAdapter;
 import songs.SongAddFormFragment;
 import songs.SongCardFragment;
 import songs.SongListFragment;
 import songs.SongListResultsFragment;
+import songs.SongsAdapter;
 
 public class HomeActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
@@ -36,7 +41,7 @@ public class HomeActivity extends FragmentActivity
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private FragmentManager fragmentManager;
-    public PlaylistsAdapter playlistsAdapter;
+    public PlaylistsCustomAdapter playlistsCustomAdapter;
 
 
     /***************************************************
@@ -53,7 +58,7 @@ public class HomeActivity extends FragmentActivity
 
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        playlistsAdapter = new PlaylistsAdapter(this.getApplicationContext(), 30);
+        playlistsCustomAdapter = new PlaylistsCustomAdapter(this.getApplicationContext(), 30);
     }
 
 
@@ -67,7 +72,7 @@ public class HomeActivity extends FragmentActivity
             changeFragment(R.id.container, HomeFragment.newInstance(), false);
         }
         else if(position == 1) {
-            changeFragment(R.id.container, PlaylistListFragment.newInstance(playlistsAdapter), false);
+            changeFragment(R.id.container, PlaylistListFragment.newInstance(playlistsCustomAdapter), false);
         }
     }
 
@@ -118,7 +123,7 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onGoToAddPlaylistButtonClicked() {
-        changeFragment(R.id.container, PlaylistAddFormFragment.newInstance(), false);
+        changeFragment(R.id.container, PlaylistAddFormFragment.newInstance(getApplicationContext()), false);
     }
     @Override
     public void onPlaylistClicked(PlaylistCustom playlist) {
@@ -131,12 +136,17 @@ public class HomeActivity extends FragmentActivity
      * PLAYLIST ADD FORM
      ***************************************************/
     @Override
-    public void onAddPlaylistButtonClicked(String title, String description, Boolean isRandomPlaylist) {
-        PlaylistCustom playlist = new PlaylistCustom(title);
-        playlist.setDescription(description);
-        playlistsAdapter.add(playlist);
-        changeFragment(R.id.container, PlaylistCardFragment.newInstance(playlist), false);
-        changeFragment(R.id.container_bottom, SongListFragment.newInstance(playlist), true);
+    public void onAddPlaylistButtonClicked(String title, String description, List<Song> list) {
+        PlaylistCustom playlistCustom = new PlaylistCustom(title);
+        playlistCustom.setDescription(description);
+        SongsAdapter songs = new SongsAdapter(getApplicationContext());
+        if(list != null && list.size() > 0) {
+            songs.addAll(list);
+            playlistCustom.setSongs(songs);
+        }
+        playlistsCustomAdapter.add(playlistCustom);
+        changeFragment(R.id.container, PlaylistCardFragment.newInstance(playlistCustom), false);
+        changeFragment(R.id.container_bottom, SongListFragment.newInstance(playlistCustom), true);
     }
 
 
@@ -146,8 +156,8 @@ public class HomeActivity extends FragmentActivity
     @Override
     public void onRemovePlaylistButtonClicked(PlaylistCustom playlist) {
         Toast.makeText(this, "La playlist " + playlist.getTitle() + " a été supprimée.", Toast.LENGTH_SHORT).show();
-        playlistsAdapter.remove(playlist);
-        changeFragment(R.id.container, PlaylistListFragment.newInstance(playlistsAdapter), false);
+        playlistsCustomAdapter.remove(playlist);
+        changeFragment(R.id.container, PlaylistListFragment.newInstance(playlistsCustomAdapter), false);
     }
 
 
