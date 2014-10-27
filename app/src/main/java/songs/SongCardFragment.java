@@ -22,9 +22,7 @@ public class SongCardFragment extends Fragment {
     public SongCardFragment() { }
     public static SongCardFragment newInstance(Song song) {
         SongCardFragment fragment = new SongCardFragment();
-
         mSong = song;
-
         return fragment;
     }
 

@@ -20,7 +20,21 @@
         android:id="@+id/home_random_playlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Aléatoire"
+        android:text="Créer une playlist"
+        />
+
+    <Button
+        android:id="@+id/home_playlists_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mes Playlists"
+        />
+
+    <Button
+        android:id="@+id/home_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Recherche"
         />
 
 </LinearLayout>

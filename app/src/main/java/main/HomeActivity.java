@@ -1,15 +1,14 @@
 package main;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.Adapter;
 import android.widget.Toast;
 
 import com.echonest.api.v4.Song;
@@ -18,9 +17,11 @@ import com.marjolainevericel.senarai.R;
 import java.util.List;
 
 import artist.ArtistCardFragment;
+import playlists.AddPlaylistRandomFormFragment;
 import playlists.PlaylistCustom;
-import playlists.PlaylistAddFormFragment;
+import playlists.AddPlaylistFormFragment;
 import playlists.PlaylistCardFragment;
+import playlists.AddPlaylistEmptyFormFragment;
 import playlists.PlaylistListFragment;
 import playlists.PlaylistsCustomAdapter;
 import songs.SongAddFormFragment;
@@ -31,17 +32,21 @@ import songs.SongsAdapter;
 
 public class HomeActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        HomeFragment.OnHomeListener,
         PlaylistListFragment.OnPlaylistListListener,
-        PlaylistAddFormFragment.OnPlaylistAddFormListener,
+        AddPlaylistFormFragment.OnPlaylistAddFormListener,
         SongListFragment.OnSongListListener,
         SongAddFormFragment.OnSongAddFormListener,
         PlaylistCardFragment.OnPlaylistCardListener,
-        SongListResultsFragment.OnSongListResultsListener {
+        SongListResultsFragment.OnSongListResultsListener,
+        AlertDialogManager.OnAlertListener {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private FragmentManager fragmentManager;
     public PlaylistsCustomAdapter playlistsCustomAdapter;
+
+    private int ADD_PLAYLIST_ALERT_DIALOG_ID = 0;
 
 
     /***************************************************
@@ -69,10 +74,10 @@ public class HomeActivity extends FragmentActivity
     public void onNavigationDrawerItemSelected(int position) {
         fragmentManager = getSupportFragmentManager();
         if(position == 0) {
-            changeFragment(R.id.container, HomeFragment.newInstance(), false);
+            changeFragment(HomeFragment.newInstance(), null);
         }
         else if(position == 1) {
-            changeFragment(R.id.container, PlaylistListFragment.newInstance(playlistsCustomAdapter), false);
+            changeFragment(PlaylistListFragment.newInstance(playlistsCustomAdapter), null);
         }
     }
 
@@ -106,29 +111,54 @@ public class HomeActivity extends FragmentActivity
     /***************************************************
      * FRAGMENT MANAGER
      ***************************************************/
-    public void changeFragment(Integer container, Fragment fragment, Boolean isBottomContainer) {
-        fragmentManager.beginTransaction()
-                .replace(container, fragment)
-                .addToBackStack(null)
-                .commit();
-        if(!isBottomContainer && fragmentManager.findFragmentById(R.id.container_bottom) != null) {
+    public void changeFragment(Fragment fragment, Fragment fragment_bottom) {
+        Fragment actualFragmentBottom = fragmentManager.findFragmentById(R.id.container_bottom);
+        if(fragment_bottom != null && fragment_bottom != actualFragmentBottom) {
             fragmentManager.beginTransaction()
+                    .replace(R.id.container, fragment)
+                    .replace(R.id.container_bottom, fragment_bottom)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        else if(actualFragmentBottom != null) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, fragment)
+                    .addToBackStack(null)
                     .remove(fragmentManager.findFragmentById(R.id.container_bottom))
+                    .commit();
+        }
+        else {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, fragment)
+                    .addToBackStack(null)
                     .commit();
         }
     }
 
     /***************************************************
+     * HOME
+     ***************************************************/
+    @Override
+    public void onGoToPlaylistsListButtonClicked() {
+        changeFragment(PlaylistListFragment.newInstance(playlistsCustomAdapter), null);
+    }
+    @Override
+    public void onGoToSearchButtonClicked() { }
+
+    /***************************************************
      * PLAYLISTS LIST
      ***************************************************/
     @Override
-    public void onGoToAddPlaylistButtonClicked() {
-        changeFragment(R.id.container, PlaylistAddFormFragment.newInstance(getApplicationContext()), false);
+    public void onPlaylistClicked(PlaylistCustom playlist) {
+        changeFragment(PlaylistCardFragment.newInstance(playlist), SongListFragment.newInstance(playlist));
     }
     @Override
-    public void onPlaylistClicked(PlaylistCustom playlist) {
-        changeFragment(R.id.container, PlaylistCardFragment.newInstance(playlist), false);
-        changeFragment(R.id.container_bottom, SongListFragment.newInstance(playlist), true);
+    public void onGoToAddPlaylistButtonClicked() {
+        AlertDialogManager alertDialogManager = new AlertDialogManager();
+        alertDialogManager.newInstance(HomeActivity.this);
+        alertDialogManager.setAlert(ADD_PLAYLIST_ALERT_DIALOG_ID);
+        AlertDialog alertDialog = alertDialogManager.getBuilder().create();
+        alertDialog.show();
     }
 
 
@@ -145,8 +175,7 @@ public class HomeActivity extends FragmentActivity
             playlistCustom.setSongs(songs);
         }
         playlistsCustomAdapter.add(playlistCustom);
-        changeFragment(R.id.container, PlaylistCardFragment.newInstance(playlistCustom), false);
-        changeFragment(R.id.container_bottom, SongListFragment.newInstance(playlistCustom), true);
+        changeFragment(PlaylistCardFragment.newInstance(playlistCustom), SongListFragment.newInstance(playlistCustom));
     }
 
 
@@ -157,7 +186,7 @@ public class HomeActivity extends FragmentActivity
     public void onRemovePlaylistButtonClicked(PlaylistCustom playlist) {
         Toast.makeText(this, "La playlist " + playlist.getTitle() + " a été supprimée.", Toast.LENGTH_SHORT).show();
         playlistsCustomAdapter.remove(playlist);
-        changeFragment(R.id.container, PlaylistListFragment.newInstance(playlistsCustomAdapter), false);
+        changeFragment(PlaylistListFragment.newInstance(playlistsCustomAdapter), null);
     }
 
 
@@ -165,13 +194,12 @@ public class HomeActivity extends FragmentActivity
      * SONG LIST
      ***************************************************/
     @Override
-    public void onSongListClicked(String id) {
-        //changeFragment(R.id.container, SongCardFragment.newInstance(id), false);
-        //changeFragment(R.id.container_bottom, ArtistCardFragment.newInstance("Linkin Park"), true);
+    public void onSongListClicked(Song song) {
+        changeFragment(SongCardFragment.newInstance(song), ArtistCardFragment.newInstance(song));
     }
     @Override
     public void onGoToAddSongButtonClicked() {
-        changeFragment(R.id.container, SongAddFormFragment.newInstance(), false);
+        changeFragment(SongAddFormFragment.newInstance(), null);
     }
 
 
@@ -180,7 +208,7 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onAddSongButtonClicked(String title, String artist) {
-        changeFragment(R.id.container, SongListResultsFragment.newInstance(title, artist), false);
+        changeFragment(SongListResultsFragment.newInstance(title, artist), null);
     }
 
 
@@ -190,7 +218,23 @@ public class HomeActivity extends FragmentActivity
     @Override
     public void onSongListResultsClicked(Song song) {
         Toast.makeText(getApplicationContext(), "Chanson clickée : " + song.getTitle(), Toast.LENGTH_LONG).show();
-        changeFragment(R.id.container, SongCardFragment.newInstance(song), false);
-        changeFragment(R.id.container_bottom, ArtistCardFragment.newInstance(song), true);
+        changeFragment(SongCardFragment.newInstance(song), ArtistCardFragment.newInstance(song));
+    }
+
+
+    /***************************************************
+     * ALERTS
+     ***************************************************/
+    @Override
+    public void onAlertPlaylistEmptyAddClicked() {
+        changeFragment(AddPlaylistEmptyFormFragment.newInstance(getApplicationContext()), null);
+    }
+    @Override
+    public void onAlertPlaylistRandomAddClicked() {
+        changeFragment(AddPlaylistRandomFormFragment.newInstance(getApplicationContext()), null);
+    }
+    @Override
+    public void onAlertPlaylistAddClicked() {
+        changeFragment(AddPlaylistFormFragment.newInstance(getApplicationContext()), null);
     }
 }

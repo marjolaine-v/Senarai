@@ -75,7 +75,6 @@ public class PlaylistListFragment extends Fragment implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        //view.setTag(0, mPlaylistsAdapter.getItem(position));
         if (null != mListener) {
             mListener.onPlaylistClicked(mPlaylistsCustomAdapter.getItem(position));
         }

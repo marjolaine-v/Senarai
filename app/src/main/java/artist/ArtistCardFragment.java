@@ -21,9 +21,7 @@ public class ArtistCardFragment extends Fragment {
     public ArtistCardFragment() { }
     public static ArtistCardFragment newInstance(Song song) {
         ArtistCardFragment fragment = new ArtistCardFragment();
-
         mSong = song;
-
         return fragment;
     }
 

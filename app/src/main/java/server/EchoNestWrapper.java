@@ -3,6 +3,7 @@ package server;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.echonest.api.v4.BasicPlaylistParams;
 import com.echonest.api.v4.EchoNestAPI;
 import com.echonest.api.v4.EchoNestException;
 import com.echonest.api.v4.Playlist;
@@ -11,11 +12,13 @@ import com.echonest.api.v4.Song;
 import com.echonest.api.v4.SongParams;
 import com.marjolainevericel.senarai.R;
 
+import java.util.Collections;
 import java.util.List;
 
 public class EchoNestWrapper {
     private static EchoNestWrapper sInstance;
     private EchoNestAPI mApi;
+    private List<String> genresList;
 
     public EchoNestWrapper(String key) {
         mApi = new EchoNestAPI(key);
@@ -36,6 +39,18 @@ public class EchoNestWrapper {
         params.setType(PlaylistParams.PlaylistType.ARTIST_RADIO);
         params.setResults(results);
         return mApi.createStaticPlaylist(params);
+    }
+
+    public List<Song> getRandomPlaylist(int numberResults) throws EchoNestException {
+        PlaylistParams params = new PlaylistParams();
+        params.addIDSpace("7digital-US");
+        params.includeTracks();
+        params.setType(PlaylistParams.PlaylistType.GENRE_RADIO);
+        genresList = mApi.listGenres();
+        Collections.shuffle(genresList);
+        params.addGenre(genresList.get(0));
+        params.setResults(numberResults);
+        return mApi.createStaticPlaylist(params).getSongs();
     }
 
     public List<Song> getCustomPlaylist(String artist, String song, int dancability, int tempo, int energy, int mode, int numberResults) throws EchoNestException {
@@ -61,8 +76,8 @@ public class EchoNestWrapper {
         // Tempo
         if(tempo != 0) {
             float _tempo = tempo * 500 / 100;
-            float _tempoMin = _tempo - (float) 20;
-            float _tempoMax = _tempo + (float) 20;
+            float _tempoMin = _tempo - (float) 50;
+            float _tempoMax = _tempo + (float) 50;
             if (_tempoMin < 0) {
                 _tempoMin = 0;
             }
@@ -74,8 +89,8 @@ public class EchoNestWrapper {
         }
         // Energy
         if(energy != 0) {
-            float _energyMin = (float)(energy * 1 / 100) - (float)0.1;
-            float _energyMax = (float)(energy * 1 / 100) + (float)0.1;
+            float _energyMin = (float)(energy * 1 / 100) - (float)0.2;
+            float _energyMax = (float)(energy * 1 / 100) + (float)0.2;
             if (_energyMin < 0) {
                 _energyMin = 0;
             }

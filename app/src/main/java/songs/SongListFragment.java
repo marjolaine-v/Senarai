@@ -11,16 +11,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
+
+import com.echonest.api.v4.Song;
 import com.marjolainevericel.senarai.R;
 
 import playlists.PlaylistCustom;
 
 public class SongListFragment extends Fragment implements AbsListView.OnItemClickListener {
 
-    private static PlaylistCustom playlistCustom;
+    private static PlaylistCustom mPlaylistCustom;
     private OnSongListListener mListener;
     private AbsListView mListView;
-    private ListAdapter mAdapter;
+    private static SongsAdapter mSongs;
 
     // My vars
     private static Button mAddButton;
@@ -32,7 +34,8 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
     public SongListFragment() { }
     public static SongListFragment newInstance(PlaylistCustom playlist) {
         SongListFragment fragment = new SongListFragment();
-        playlistCustom = playlist;
+        mPlaylistCustom = playlist;
+        mSongs = playlist.getSongs();
         return fragment;
     }
 
@@ -51,7 +54,7 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(R.id.list);
-        mListView.setAdapter(playlistCustom.getSongs());
+        mListView.setAdapter(mSongs);
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
@@ -91,6 +94,7 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (null != mListener) {
+            mListener.onSongListClicked(mSongs.getItem(position));
         }
     }
 
@@ -99,7 +103,7 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
      * INTERFACE
      ***************************************************/
     public interface OnSongListListener {
-        public void onSongListClicked(String id);
+        public void onSongListClicked(Song song);
         public void onGoToAddSongButtonClicked();
     }
 

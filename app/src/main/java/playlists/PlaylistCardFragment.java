@@ -44,6 +44,9 @@ public class PlaylistCardFragment extends Fragment {
         // View's elements
         ((TextView) view.findViewById(R.id.playlist_card_title)).setText(mPlaylist.getTitle());
         ((TextView) view.findViewById(R.id.playlist_card_description)).setText(mPlaylist.getDescription());
+        String _songs = "chansons";
+        if(mPlaylist.getSongs().getCount() <= 1) { _songs = "chanson"; }
+        ((TextView) view.findViewById(R.id.playlist_card_number_songs)).setText(mPlaylist.getSongs().getCount() + " " + _songs);
 
         // Button "REMOVE"
         mRemoveButton = (Button) view.findViewById(R.id.playlist_card_remove_button);
