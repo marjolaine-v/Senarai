@@ -27,9 +27,7 @@ public class PlaylistCardFragment extends Fragment {
     public PlaylistCardFragment() { }
     public static PlaylistCardFragment newInstance(PlaylistCustom playlist) {
         PlaylistCardFragment fragment = new PlaylistCardFragment();
-
         mPlaylist = playlist;
-
         return fragment;
     }
 

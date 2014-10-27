@@ -38,6 +38,7 @@ public class HomeActivity extends FragmentActivity
         SongListFragment.OnSongListListener,
         SongAddFormFragment.OnSongAddFormListener,
         PlaylistCardFragment.OnPlaylistCardListener,
+        SongCardFragment.OnSongCardListener,
         SongListResultsFragment.OnSongListResultsListener,
         AlertDialogManager.OnAlertListener,
         SongsAdapter.OnSongsAdapterListener,
@@ -122,7 +123,7 @@ public class HomeActivity extends FragmentActivity
                     .addToBackStack(null)
                     .commit();
         }
-        else if(actualFragmentBottom != null) {
+        else if(actualFragmentBottom != null && fragment_bottom == null) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, fragment)
                     .addToBackStack(null)
@@ -197,7 +198,7 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onSongListClicked(Song song) {
-        changeFragment(SongCardFragment.newInstance(song), ArtistCardFragment.newInstance(song));
+        changeFragment(SongCardFragment.newInstance(song), null);
     }
     @Override
     public void onGoToAddSongButtonClicked() {
@@ -221,6 +222,15 @@ public class HomeActivity extends FragmentActivity
     public void onSongListResultsClicked(Song song) {
         Toast.makeText(getApplicationContext(), "Chanson clickée : " + song.getTitle(), Toast.LENGTH_LONG).show();
         changeFragment(SongCardFragment.newInstance(song), ArtistCardFragment.newInstance(song));
+    }
+
+
+    /***************************************************
+     * SONG CARD
+     ***************************************************/
+    @Override
+    public void onGoToArtistButtonClicked(Song song) {
+        changeFragment(ArtistCardFragment.newInstance(song), null);
     }
 
 

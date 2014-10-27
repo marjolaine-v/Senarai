@@ -19,7 +19,7 @@ import com.marjolainevericel.senarai.R;
 
 import playlists.PlaylistCustom;
 
-public class SongListFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class SongListFragment extends Fragment {
 
     private static PlaylistCustom mPlaylistCustom;
     private OnSongListListener mListener;
@@ -58,10 +58,7 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_song_list, container, false);
 
-        // Set the adapter
-        /*mListView = (AbsListView) view.findViewById(R.id.list);
-        mListView.setAdapter(mSongs);
-        mListView.setOnItemClickListener(this);*/
+        // Set the layout
         mLayout = (LinearLayout)view.findViewById(R.id.list);
         for (int i = 0 ; i < mSongs.getCount() ; i++) {
             View item = mSongs.getView(i, null, null);
@@ -98,21 +95,9 @@ public class SongListFragment extends Fragment implements AbsListView.OnItemClic
 
 
     /***************************************************
-     * CLICKS
-     ***************************************************/
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-
-        }
-    }
-
-
-    /***************************************************
      * INTERFACE
      ***************************************************/
     public interface OnSongListListener {
-        public void onSongListClicked(Song song);
         public void onGoToAddSongButtonClicked();
     }
 
