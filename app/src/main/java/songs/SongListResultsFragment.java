@@ -100,7 +100,7 @@ public class SongListResultsFragment extends Fragment implements AbsListView.OnI
      ***************************************************/
     @Override
     public Loader<List<Song>> onCreateLoader(int i, Bundle bundle) {
-        SongsLoader loader = new SongsLoader(getActivity());
+        SongLoader loader = new SongLoader(getActivity());
         loader.setTitle(mTitle);
         loader.setArtist(mArtist);
         return loader;

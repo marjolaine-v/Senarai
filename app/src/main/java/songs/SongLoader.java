@@ -9,13 +9,13 @@ import java.util.List;
 
 import server.EchoNestWrapper;
 
-public class SongsLoader extends android.support.v4.content.AsyncTaskLoader<List<Song>> {
+public class SongLoader extends android.support.v4.content.AsyncTaskLoader<List<Song>> {
 
     private String mTitle;
     private String mArtist;
     private List<Song> mList;
 
-    public SongsLoader(Context context) {
+    public SongLoader(Context context) {
         super(context);
     }
 

@@ -58,16 +58,17 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/card_artist_genres"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        />
-
-    <GridLayout
         android:id="@+id/card_artist_pictures"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        />
+
+    <LinearLayout
+        android:id="@+id/card_artist_songs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         />
 
 </LinearLayout>

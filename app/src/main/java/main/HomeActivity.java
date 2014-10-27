@@ -48,6 +48,7 @@ public class HomeActivity extends FragmentActivity
     private CharSequence mTitle;
     private FragmentManager fragmentManager;
     public PlaylistsCustomAdapter playlistsCustomAdapter;
+    private EmptyFragment emptyFragment;
 
     private int ADD_PLAYLIST_ALERT_DIALOG_ID = 0;
 
@@ -60,6 +61,8 @@ public class HomeActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_home);
+
+        emptyFragment = new EmptyFragment();
 
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -77,10 +80,10 @@ public class HomeActivity extends FragmentActivity
     public void onNavigationDrawerItemSelected(int position) {
         fragmentManager = getSupportFragmentManager();
         if(position == 0) {
-            changeFragment(HomeFragment.newInstance(), null);
+            changeFragment(HomeFragment.newInstance(), EmptyFragment.newInstance());
         }
         else if(position == 1) {
-            changeFragment(PlaylistListFragment.newInstance(playlistsCustomAdapter), null);
+            changeFragment(PlaylistListFragment.newInstance(playlistsCustomAdapter), EmptyFragment.newInstance());
         }
     }
 
@@ -115,27 +118,11 @@ public class HomeActivity extends FragmentActivity
      * FRAGMENT MANAGER
      ***************************************************/
     public void changeFragment(Fragment fragment, Fragment fragment_bottom) {
-        Fragment actualFragmentBottom = fragmentManager.findFragmentById(R.id.container_bottom);
-        if(fragment_bottom != null && fragment_bottom != actualFragmentBottom) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, fragment)
-                    .replace(R.id.container_bottom, fragment_bottom)
-                    .addToBackStack(null)
-                    .commit();
-        }
-        else if(actualFragmentBottom != null && fragment_bottom == null) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, fragment)
-                    .addToBackStack(null)
-                    .remove(fragmentManager.findFragmentById(R.id.container_bottom))
-                    .commit();
-        }
-        else {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, fragment)
-                    .addToBackStack(null)
-                    .commit();
-        }
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .replace(R.id.container_bottom, fragment_bottom)
+                .addToBackStack(null)
+                .commit();
     }
 
     /***************************************************
@@ -143,7 +130,7 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onGoToPlaylistsListButtonClicked() {
-        changeFragment(PlaylistListFragment.newInstance(playlistsCustomAdapter), null);
+        changeFragment(PlaylistListFragment.newInstance(playlistsCustomAdapter), EmptyFragment.newInstance());
     }
     @Override
     public void onGoToSearchButtonClicked() { }
@@ -189,7 +176,7 @@ public class HomeActivity extends FragmentActivity
     public void onRemovePlaylistButtonClicked(PlaylistCustom playlist) {
         Toast.makeText(this, "La playlist " + playlist.getTitle() + " a été supprimée.", Toast.LENGTH_SHORT).show();
         playlistsCustomAdapter.remove(playlist);
-        changeFragment(PlaylistListFragment.newInstance(playlistsCustomAdapter), null);
+        changeFragment(PlaylistListFragment.newInstance(playlistsCustomAdapter), EmptyFragment.newInstance());
     }
 
 
@@ -198,11 +185,11 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onSongListClicked(Song song) {
-        changeFragment(SongCardFragment.newInstance(song), null);
+        changeFragment(SongCardFragment.newInstance(song), EmptyFragment.newInstance());
     }
     @Override
     public void onGoToAddSongButtonClicked() {
-        changeFragment(SongAddFormFragment.newInstance(), null);
+        changeFragment(SongAddFormFragment.newInstance(), EmptyFragment.newInstance());
     }
 
 
@@ -211,7 +198,7 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onAddSongButtonClicked(String title, String artist) {
-        changeFragment(SongListResultsFragment.newInstance(title, artist), null);
+        changeFragment(SongListResultsFragment.newInstance(title, artist), EmptyFragment.newInstance());
     }
 
 
@@ -230,7 +217,7 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onGoToArtistButtonClicked(Song song) {
-        changeFragment(ArtistCardFragment.newInstance(song), null);
+        changeFragment(ArtistCardFragment.newInstance(song), EmptyFragment.newInstance());
     }
 
 
@@ -239,14 +226,14 @@ public class HomeActivity extends FragmentActivity
      ***************************************************/
     @Override
     public void onAlertPlaylistEmptyAddClicked() {
-        changeFragment(AddPlaylistEmptyFormFragment.newInstance(getApplicationContext()), null);
+        changeFragment(AddPlaylistEmptyFormFragment.newInstance(getApplicationContext()), EmptyFragment.newInstance());
     }
     @Override
     public void onAlertPlaylistRandomAddClicked() {
-        changeFragment(AddPlaylistRandomFormFragment.newInstance(getApplicationContext()), null);
+        changeFragment(AddPlaylistRandomFormFragment.newInstance(getApplicationContext()), EmptyFragment.newInstance());
     }
     @Override
     public void onAlertPlaylistAddClicked() {
-        changeFragment(AddPlaylistFormFragment.newInstance(getApplicationContext()), null);
+        changeFragment(AddPlaylistFormFragment.newInstance(getApplicationContext()), EmptyFragment.newInstance());
     }
 }

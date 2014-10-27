@@ -6,24 +6,30 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.echonest.api.v4.Artist;
 import com.echonest.api.v4.EchoNestException;
 import com.echonest.api.v4.Song;
+import com.echonest.api.v4.Image;
 import com.marjolainevericel.senarai.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class ArtistCardFragment extends Fragment implements android.support.v4.app.LoaderManager.LoaderCallbacks<List<Artist>> {
 
     private static final int ARTIST_LOADER_ID = 16;
-    private static Song mSong;
+    private LayoutInflater mInflater;
     static Artist mArtist;
     static String mName;
-    static double mHotttness;
-    static List<String> mGenres;
+    private ProgressBar mPBHotttnesss;
+    private LinearLayout mLayoutImages;
+    private LinearLayout mLayoutSongs;
 
 
     /***************************************************
@@ -32,7 +38,6 @@ public class ArtistCardFragment extends Fragment implements android.support.v4.a
     public ArtistCardFragment() { }
     public static ArtistCardFragment newInstance(Song song) {
         ArtistCardFragment fragment = new ArtistCardFragment();
-        mSong = song;
         mName = song.getArtistName();
         return fragment;
     }
@@ -40,7 +45,7 @@ public class ArtistCardFragment extends Fragment implements android.support.v4.a
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getLoaderManager().initLoader(ARTIST_LOADER_ID, null, this);
+        getLoaderManager().initLoader(ARTIST_LOADER_ID, null, this);
     }
 
 
@@ -49,9 +54,13 @@ public class ArtistCardFragment extends Fragment implements android.support.v4.a
      ***************************************************/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mInflater = inflater;
         View view = inflater.inflate(R.layout.card_artist, container, false);
 
         ((TextView) view.findViewById(R.id.card_artist_name)).setText(mName);
+        mPBHotttnesss = (ProgressBar) view.findViewById(R.id.card_artist_hotttnesss);
+        mLayoutImages = (LinearLayout) view.findViewById(R.id.card_artist_pictures);
+        mLayoutSongs = (LinearLayout) view.findViewById(R.id.card_artist_songs);
 
         return view;
     }
@@ -70,9 +79,40 @@ public class ArtistCardFragment extends Fragment implements android.support.v4.a
     @Override
     public void onLoadFinished(Loader<List<Artist>> listLoader, List<Artist> artists) {
         if (artists != null) {
-            mArtist = artists.get(0);
             try {
-                mHotttness = artists.get(0).getHotttnesss();
+                double mHotttnesss = artists.get(0).getHotttnesss();
+                mPBHotttnesss.setProgress((int)(mHotttnesss * 100));
+            } catch (EchoNestException e) {
+                e.printStackTrace();
+            }
+            try {
+                List<Song> mSongs = artists.get(0).getSongs();
+                int max = 5;
+                if(mSongs.size() < 5) {
+                    max = mSongs.size();
+                }
+                for (int i = 0 ; i < max ; i++) {
+                    Song song = mSongs.get(i);
+                    View view = mInflater.inflate(R.layout.simple_list_item, null);
+                    ((TextView) view.findViewById(R.id.text1)).setText(song.getTitle());
+                    mLayoutSongs.addView(view);
+                }
+            } catch (EchoNestException e) {
+                e.printStackTrace();
+            }
+            try {
+                List<Image> mImages = artists.get(0).getImages();
+                int max = 5;
+                if(mImages.size() < 5) {
+                    max = mImages.size();
+                }
+                for (int i = 0 ; i < max ; i++) {
+                    String imgURL = mImages.get(i).getURL();
+                    View view = mInflater.inflate(R.layout.artist_image, null);
+                    ImageView imgView = (ImageView) view.findViewById(R.id.imageView);
+                    Picasso.with(getActivity().getApplicationContext()).load(imgURL).into(imgView);
+                    mLayoutImages.addView(view);
+                }
             } catch (EchoNestException e) {
                 e.printStackTrace();
             }

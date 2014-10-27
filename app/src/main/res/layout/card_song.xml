@@ -30,12 +30,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
+            android:text="Durée : --"
+            android:textColor="#FFFFFF"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" / "
+            android:layout_gravity="left"
             android:textColor="#FFFFFF"
             />
         <TextView
             android:id="@+id/card_song_tempo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Tempo : --"
             android:layout_gravity="left"
             android:textColor="#FFFFFF"
             />
@@ -71,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:text="Dançabilité"
+            android:text="Energie"
             android:textColor="#FFFFFF"
             />
         <ProgressBar
@@ -104,13 +113,29 @@
             />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/card_song_artist"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:textColor="#FFFFFF"
-        />
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        >
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/card_song_cover"
+            android:layout_margin="5dp"
+            />
+        <TextView
+            android:id="@+id/card_song_artist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            />
+    </LinearLayout>
 
     <Button
         android:id="@+id/card_song_see_artist"

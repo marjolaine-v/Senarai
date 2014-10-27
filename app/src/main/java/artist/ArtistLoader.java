@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.echonest.api.v4.Artist;
 import com.echonest.api.v4.EchoNestException;
-import com.echonest.api.v4.Song;
 
 import java.util.List;
 

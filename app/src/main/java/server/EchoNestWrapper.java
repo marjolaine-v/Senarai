@@ -117,9 +117,12 @@ public class EchoNestWrapper {
     public List<Song> getSongsByKeys(String title, String artist) throws
             EchoNestException {
         SongParams params = new SongParams();
+        params.addIDSpace("7digital-US");
         params.setTitle(title);
         params.setArtist(artist);
         params.includeSongHotttnesss();
+        params.includeAudioSummary();
+        params.includeTracks();
         params.setResults(10);
         return mApi.searchSongs(params);
     }
@@ -127,6 +130,9 @@ public class EchoNestWrapper {
     public List<Artist> getArtist(String name) throws EchoNestException {
         ArtistParams params = new ArtistParams();
         params.addName(name);
+        params.includeHotttnesss();
+        params.includeImages();
+        params.includeSongs();
         params.setResults(1);
         return mApi.searchArtists(params);
     }

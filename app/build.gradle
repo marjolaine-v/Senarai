@@ -24,4 +24,5 @@ dependencies {
     compile files('libs/jEN.jar')
     compile files('libs/json_simple-1.1.jar')
     compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.squareup.picasso:picasso:2.3.4'
 }
