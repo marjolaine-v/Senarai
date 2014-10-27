@@ -13,7 +13,7 @@ import com.marjolainevericel.senarai.R;
 public class HomeFragment extends Fragment {
 
     private Button mPlaylistsListButton;
-    private Button mRandomPlaylistButton;
+    private Button mPlaylistAddButton;
     private Button mSearchButton;
     private OnHomeListener mListener;
 
@@ -35,9 +35,9 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // Button "Créer une playlist aléatoire"
-        mRandomPlaylistButton = (Button) view.findViewById(R.id.home_random_playlist);
-        mRandomPlaylistButton.setOnClickListener(new View.OnClickListener() {
+        // Button "Créer une playlist"
+        mPlaylistAddButton = (Button) view.findViewById(R.id.home_add_playlist_button);
+        mPlaylistAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mListener.onGoToAddPlaylistButtonClicked();
@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment {
         });
 
         // Button "Mes Playlists"
-        mPlaylistsListButton = (Button) view.findViewById(R.id.home_playlists_list);
+        mPlaylistsListButton = (Button) view.findViewById(R.id.home_playlists_list_button);
         mPlaylistsListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
         });
 
         // Button "Recherche"
-        mSearchButton = (Button) view.findViewById(R.id.home_search);
+        mSearchButton = (Button) view.findViewById(R.id.home_search_button);
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

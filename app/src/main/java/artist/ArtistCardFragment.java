@@ -33,7 +33,7 @@ public class ArtistCardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.card_artist, container, false);
 
-        ((TextView) view.findViewById(R.id.artist_card_name)).setText(mSong.getArtistName());
+        ((TextView) view.findViewById(R.id.card_artist_name)).setText(mSong.getArtistName());
 
         return view;
     }

@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/card_song"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#abcdef"
-    android:layout_margin="10dp"
+    android:padding="10dp"
+    android:background="#DEDE84"
     >
 
     <TextView
+        android:id="@+id/card_song_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/song_card_title"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        />
 
     <TextView
+        android:id="@+id/card_song_duration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/song_card_duration"
-        android:layout_gravity="left" />
+        android:layout_gravity="left"
+        android:textColor="#FFFFFF"
+        />
 
 </LinearLayout>

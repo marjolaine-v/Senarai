@@ -42,14 +42,16 @@ public class PlaylistCardFragment extends Fragment {
         View view = inflater.inflate(R.layout.card_playlist, container, false);
 
         // View's elements
-        ((TextView) view.findViewById(R.id.playlist_card_title)).setText(mPlaylist.getTitle());
-        ((TextView) view.findViewById(R.id.playlist_card_description)).setText(mPlaylist.getDescription());
-        String _songs = "chansons";
-        if(mPlaylist.getSongs().getCount() <= 1) { _songs = "chanson"; }
-        ((TextView) view.findViewById(R.id.playlist_card_number_songs)).setText(mPlaylist.getSongs().getCount() + " " + _songs);
+        ((TextView) view.findViewById(R.id.card_playlist_title)).setText(mPlaylist.getTitle());
+        ((TextView) view.findViewById(R.id.card_playlist_description)).setText(mPlaylist.getDescription());
+        if(mPlaylist.getSongs() != null) {
+            String _songs = "chansons";
+            if(mPlaylist.getSongs().getCount() <= 1) { _songs = "chanson"; }
+            ((TextView) view.findViewById(R.id.card_playlist_number_songs)).setText(mPlaylist.getSongs().getCount() + " " + _songs);
+        }
 
         // Button "REMOVE"
-        mRemoveButton = (Button) view.findViewById(R.id.playlist_card_remove_button);
+        mRemoveButton = (Button) view.findViewById(R.id.card_playlist_remove_button);
         mRemoveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

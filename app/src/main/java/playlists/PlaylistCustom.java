@@ -14,6 +14,8 @@ public class PlaylistCustom {
 
     public PlaylistCustom(String title) {
         mTitle = title;
+        mDescription = "";
+        mSongs = null;
     }
 
     public String getTitle() {
